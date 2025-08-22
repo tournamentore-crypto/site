@@ -8,56 +8,73 @@ function toggleLanguage() {
     performSearch();
 }
 
-function toggleSearch() {
-    const searchInput = document.getElementById('search-input') || document.getElementById('mobile-search-input');
-    if (searchInput) {
+function toggleSearch(event) {
+    event.preventDefault(); // Предотвращаем возможные конфликты
+    const searchInput = document.querySelector('.search-form input');
+    const searchButton = document.querySelector('.search-form button');
+    console.log('Toggling search - Input:', searchInput, 'Button:', searchButton, 'Event:', event); // Диагностика
+    if (searchInput && searchButton) {
         searchInput.classList.toggle('active');
         if (searchInput.classList.contains('active')) {
-            searchInput.focus();
+            searchInput.focus(); // Устанавливаем фокус на поле ввода
+            console.log('Input focused, value:', searchInput.value);
         } else {
             searchInput.value = '';
-            document.getElementById('search-results').style.display = 'none';
+            const resultsDiv = document.getElementById('search-results');
+            if (resultsDiv) {
+                resultsDiv.style.display = 'none';
+            }
+            console.log('Input cleared');
         }
     } else {
-        console.error('Search input not found');
+        console.error('Search input or button not found. Ensure .search-form contains at least one <input> and <button>.');
     }
 }
 
 function performSearch() {
-    const searchInput = document.getElementById('search-input') || document.getElementById('mobile-search-input');
-    const query = searchInput ? searchInput.value.toLowerCase() : '';
-    const resultsDiv = document.getElementById('search-results');
-    resultsDiv.innerHTML = '';
-    if (!query) {
-        resultsDiv.style.display = 'none';
-        return;
-    }
-    const container = document.querySelector('.container');
-    const texts = container.querySelectorAll('p, li, h2, h3, td');
-    let results = [];
-    texts.forEach(text => {
-        const content = text.textContent.toLowerCase();
-        if (content.includes(query)) {
-            const result = document.createElement('div');
-            result.className = 'result';
-            const highlightedText = text.innerHTML.replace(
-                new RegExp(query, 'gi'),
-                match => `<span class="highlight">${match}</span>`
-            );
-            result.innerHTML = highlightedText;
-            results.push(result);
+    const searchInput = document.querySelector('.search-form input');
+    if (searchInput) {
+        const query = searchInput.value.toLowerCase();
+        const resultsDiv = document.getElementById('search-results');
+        console.log('Performing search with query:', query); // Диагностика
+        if (resultsDiv) {
+            resultsDiv.innerHTML = '';
+            if (!query) {
+                resultsDiv.style.display = 'none';
+                return;
+            }
+            const container = document.querySelector('.container');
+            const texts = container.querySelectorAll('p, li, h2, h3, td');
+            let results = [];
+            texts.forEach(text => {
+                const content = text.textContent.toLowerCase();
+                if (content.includes(query)) {
+                    const result = document.createElement('div');
+                    result.className = 'result';
+                    const highlightedText = text.innerHTML.replace(
+                        new RegExp(query, 'gi'),
+                        match => `<span class="highlight">${match}</span>`
+                    );
+                    result.innerHTML = highlightedText;
+                    results.push(result);
+                }
+            });
+            if (results.length > 0) {
+                results.forEach(result => resultsDiv.appendChild(result));
+                resultsDiv.style.display = 'block';
+            } else {
+                resultsDiv.innerHTML = `<div class="result">${
+                    document.documentElement.getAttribute('data-lang') === 'ru'
+                        ? 'Ничего не найдено'
+                        : 'No results found'
+                }</div>`;
+                resultsDiv.style.display = 'block';
+            }
+        } else {
+            console.error('Search results div not found');
         }
-    });
-    if (results.length > 0) {
-        results.forEach(result => resultsDiv.appendChild(result));
-        resultsDiv.style.display = 'block';
     } else {
-        resultsDiv.innerHTML = `<div class="result">${
-            document.documentElement.getAttribute('data-lang') === 'ru'
-                ? 'Ничего не найдено'
-                : 'No results found'
-        }</div>`;
-        resultsDiv.style.display = 'block';
+        console.error('Search input not found');
     }
 }
 
@@ -71,15 +88,12 @@ function handleOrderSubmit(event) {
 function toggleSidebar() {
     const sidebar = document.querySelector('.sidebar');
     const hamburger = document.querySelector('.hamburger');
-    const searchForm = document.querySelector('.search-form');
     if (sidebar) {
         sidebar.classList.toggle('open');
         if (sidebar.classList.contains('open')) {
             if (hamburger) hamburger.classList.add('hidden'); // Hide hamburger
-            if (searchForm) searchForm.classList.add('show'); // Show search form
         } else {
             if (hamburger) hamburger.classList.remove('hidden'); // Show hamburger
-            if (searchForm) searchForm.classList.remove('show'); // Hide search form
         }
     } else {
         console.error('Sidebar not found');
@@ -89,11 +103,9 @@ function toggleSidebar() {
 function closeSidebar(event) {
     const sidebar = document.querySelector('.sidebar');
     const hamburger = document.querySelector('.hamburger');
-    const searchForm = document.querySelector('.search-form');
     if (sidebar && hamburger && !sidebar.contains(event.target) && !hamburger.contains(event.target)) {
         sidebar.classList.remove('open');
         hamburger.classList.remove('hidden'); // Ensure hamburger is visible
-        if (searchForm) searchForm.classList.remove('show'); // Hide search form
     }
 }
 
@@ -125,11 +137,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('language') || 'ru';
     document.documentElement.setAttribute('data-lang', savedLang);
 
-    const searchInput = document.getElementById('search-input') || document.getElementById('mobile-search-input');
-    if (searchInput) {
+    const searchInput = document.querySelector('.search-form input');
+    const searchButton = document.querySelector('.search-form button');
+    if (searchInput && searchButton) {
+        searchButton.addEventListener('click', toggleSearch);
         searchInput.addEventListener('input', performSearch);
+        console.log('Search initialized - Input:', searchInput, 'Button:', searchButton); // Диагностика
     } else {
-        console.error('Search input not found');
+        console.error('Search input or button not found. Ensure .search-form contains at least one <input> and <button>.');
     }
 
     const orderForms = document.querySelectorAll('#order-form');
