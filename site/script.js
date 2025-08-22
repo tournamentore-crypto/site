@@ -10,29 +10,31 @@ function toggleLanguage() {
 
 function toggleSearch(event) {
     event.preventDefault(); // Предотвращаем возможные конфликты
-    const searchInput = document.querySelector('.search-form input');
+    const searchInputs = document.querySelectorAll('.search-form input'); // Поддержка desktop и mobile
     const searchButton = document.querySelector('.search-form button');
-    console.log('Toggling search - Input:', searchInput, 'Button:', searchButton, 'Event:', event); // Диагностика
-    if (searchInput && searchButton) {
-        searchInput.classList.toggle('active');
-        if (searchInput.classList.contains('active')) {
-            searchInput.focus(); // Устанавливаем фокус на поле ввода
-            console.log('Input focused, value:', searchInput.value);
-        } else {
-            searchInput.value = '';
-            const resultsDiv = document.getElementById('search-results');
-            if (resultsDiv) {
-                resultsDiv.style.display = 'none';
+    console.log('Toggling search - Inputs:', searchInputs, 'Button:', searchButton, 'Event:', event); // Диагностика
+    if (searchInputs.length > 0 && searchButton) {
+        searchInputs.forEach(input => {
+            input.classList.toggle('active');
+            if (input.classList.contains('active')) {
+                input.focus(); // Устанавливаем фокус на поле ввода
+                console.log('Input focused, value:', input.value, 'Input:', input);
+            } else {
+                input.value = '';
+                const resultsDiv = document.getElementById('search-results');
+                if (resultsDiv) {
+                    resultsDiv.style.display = 'none';
+                }
+                console.log('Input cleared');
             }
-            console.log('Input cleared');
-        }
+        });
     } else {
         console.error('Search input or button not found. Ensure .search-form contains at least one <input> and <button>.');
     }
 }
 
 function performSearch() {
-    const searchInput = document.querySelector('.search-form input');
+    const searchInput = document.querySelector('.search-form input.active'); // Берем активное поле
     if (searchInput) {
         const query = searchInput.value.toLowerCase();
         const resultsDiv = document.getElementById('search-results');
@@ -74,7 +76,7 @@ function performSearch() {
             console.error('Search results div not found');
         }
     } else {
-        console.error('Search input not found');
+        console.error('No active search input found');
     }
 }
 
@@ -137,12 +139,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('language') || 'ru';
     document.documentElement.setAttribute('data-lang', savedLang);
 
-    const searchInput = document.querySelector('.search-form input');
+    const searchInputs = document.querySelectorAll('.search-form input');
     const searchButton = document.querySelector('.search-form button');
-    if (searchInput && searchButton) {
+    if (searchInputs.length > 0 && searchButton) {
         searchButton.addEventListener('click', toggleSearch);
-        searchInput.addEventListener('input', performSearch);
-        console.log('Search initialized - Input:', searchInput, 'Button:', searchButton); // Диагностика
+        searchInputs.forEach(input => {
+            input.addEventListener('input', performSearch);
+        });
+        console.log('Search initialized - Inputs:', searchInputs, 'Button:', searchButton); // Диагностика
     } else {
         console.error('Search input or button not found. Ensure .search-form contains at least one <input> and <button>.');
     }

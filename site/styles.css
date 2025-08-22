@@ -86,13 +86,13 @@ header img.logo {
     opacity: 0;
     transition: width 0.3s ease, opacity 0.3s ease, transform 0.3s ease; /* Smooth transition with transform */
     margin-right: 5px;
-    transform: translateX(-100%); /* Start off-screen to the left */
+    transform: translateX(100%); /* Start off-screen to the right */
     box-sizing: border-box; /* Учитывать padding в ширине */
 }
 .search-form input.active {
     width: 150px; /* Expanded width */
     opacity: 1;
-    transform: translateX(0); /* Move to align with button */
+    transform: translateX(0); /* Move to align with button from right */
 }
 .search-form input.desktop-only {
     display: block;
@@ -280,8 +280,9 @@ footer {
         display: flex;
         align-items: center;
         margin: 0;
-        position: relative;
-        order: 2; /* After logo */
+        position: absolute;
+        right: 20px; /* Перемещаем лупу и форму на правый край */
+        order: 999; /* Высокий порядок для правого расположения */
     }
     .search-form input.desktop-only {
         display: none;
@@ -290,19 +291,20 @@ footer {
         display: block;
         width: 0; /* Initially hidden on mobile */
         opacity: 0;
-        transform: translateX(-100%); /* Start off-screen to the left */
-        margin-right: 5px;
+        transform: translateX(100%); /* Start off-screen to the right */
+        margin-left: 5px; /* Пространство слева от лупы */
     }
     .search-form input.mobile-only.active {
         width: 150px; /* Expanded width on mobile */
         opacity: 1;
-        transform: translateX(0); /* Move to align with button */
+        transform: translateX(0); /* Move to align with button from right */
     }
     .search-form button {
-        margin-left: 0; /* No margin to keep flush with logo */
+        margin-left: 0; /* No margin to keep flush with edge */
+        order: 1; /* Лупа справа */
     }
     .language-switcher {
-        order: 3; /* After search */
+        order: 2; /* After search */
         margin: 0 5px;
     }
     .sidebar {
