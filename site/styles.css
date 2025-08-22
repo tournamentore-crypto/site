@@ -8,7 +8,7 @@ body {
 }
 header {
     background-color: rgba(255, 255, 255, 0.8); /* White, slightly dimmer */
-    padding: 10px 20px; /* Normal state */
+    padding: 15px 20px; /* Increased padding for visibility */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -18,14 +18,15 @@ header {
     left: 0;
     width: 100%; /* Ensure full width */
     z-index: 1000;
-    transition: padding 0.15s ease, transform 0.15s ease, background-color 0.15s ease; /* Fast transition */
+    transition: all 0.3s ease; /* Smooth transition for all properties */
     will-change: padding, transform, background-color; /* Optimize animation */
     box-sizing: border-box; /* Ensure padding doesn't affect width */
 }
 header.scrolled {
-    padding: 5px 20px; /* Reduced padding when scrolled */
-    transform: translateY(-5px); /* Slight upward shift */
-    background-color: rgba(255, 255, 255, 0.95); /* More opaque when scrolled */
+    padding: 8px 20px; /* Slightly larger than before for noticeable effect */
+    transform: translateY(-8px); /* Increased shift for visibility */
+    background-color: rgba(255, 255, 255, 1); /* Fully opaque when scrolled */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 header img.logo {
     max-width: 120px;
@@ -60,7 +61,7 @@ header img.logo {
     font-weight: bold;
     padding: 6px 10px;
     border-radius: 5px;
-    transition: background-color 0.15s ease, color 0.15s ease; /* Fast transition */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Fast transition */
 }
 .nav-links a:hover, .nav-links a.active {
     background-color: #4caf50; /* Green highlight */
@@ -77,10 +78,16 @@ header img.logo {
     border: 1px solid #c8e6c9;
     border-radius: 5px;
     width: 120px;
-    transition: width 0.15s ease;
+    transition: width 0.3s ease;
 }
 .search-form input.active {
     width: 150px;
+}
+.search-form input.desktop-only {
+    display: block;
+}
+.search-form input.mobile-only {
+    display: none;
 }
 .search-form button {
     padding: 6px 10px;
@@ -133,7 +140,7 @@ header img.logo {
     max-width: 1200px;
     margin: 20px auto;
     padding: 0 20px;
-    padding-top: 60px; /* Adjusted for fixed header */
+    padding-top: 70px; /* Increased to avoid overlap with larger header */
 }
 h2 {
     color: #2e7d32; /* Dark green for headings */
@@ -226,7 +233,8 @@ footer {
     header.scrolled {
         padding: 5px 20px; /* Reduced padding when scrolled */
         transform: translateY(-5px); /* Slight upward shift */
-        background-color: rgba(255, 255, 255, 0.95); /* More opaque when scrolled */
+        background-color: rgba(255, 255, 255, 1); /* Fully opaque */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
     .hamburger {
         display: block; /* Show hamburger on mobile */
@@ -242,7 +250,11 @@ footer {
         order: 2; /* After logo */
         margin: 0 5px;
     }
-    .search-form input {
+    .search-form input.desktop-only {
+        display: none;
+    }
+    .search-form input.mobile-only {
+        display: block;
         width: 100px;
     }
     .search-form input.active {

@@ -11,18 +11,22 @@ function toggleLanguage() {
 
 function toggleSearch() {
     const searchInput = document.getElementById('search-input') || document.getElementById('mobile-search-input');
-    searchInput.classList.toggle('active');
-    if (searchInput.classList.contains('active')) {
-        searchInput.focus();
+    if (searchInput) {
+        searchInput.classList.toggle('active');
+        if (searchInput.classList.contains('active')) {
+            searchInput.focus();
+        } else {
+            searchInput.value = '';
+            document.getElementById('search-results').style.display = 'none';
+        }
     } else {
-        searchInput.value = '';
-        document.getElementById('search-results').style.display = 'none';
+        console.error('Search input not found');
     }
 }
 
 function performSearch() {
     const searchInput = document.getElementById('search-input') || document.getElementById('mobile-search-input');
-    const query = searchInput.value.toLowerCase();
+    const query = searchInput ? searchInput.value.toLowerCase() : '';
     const resultsDiv = document.getElementById('search-results');
     resultsDiv.innerHTML = '';
     if (!query) {
@@ -67,13 +71,17 @@ function handleOrderSubmit(event) {
 
 function toggleSidebar() {
     const sidebar = document.querySelector('.sidebar');
-    sidebar.classList.toggle('open');
+    if (sidebar) {
+        sidebar.classList.toggle('open');
+    } else {
+        console.error('Sidebar not found');
+    }
 }
 
 function closeSidebar(event) {
     const sidebar = document.querySelector('.sidebar');
     const hamburger = document.querySelector('.hamburger');
-    if (!sidebar.contains(event.target) && !hamburger.contains(event.target)) {
+    if (sidebar && hamburger && !sidebar.contains(event.target) && !hamburger.contains(event.target)) {
         sidebar.classList.remove('open');
     }
 }
@@ -86,15 +94,15 @@ function handleScroll() {
     }
 
     const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const delta = 30; // Minimum scroll change to avoid jitter
+    const delta = 20; /* Reduced delta for smoother response */
     const isScrolled = header.classList.contains('scrolled');
 
     if (Math.abs(currentScrollTop - lastScrollTop) <= delta) return;
 
-    if (currentScrollTop > 100 && currentScrollTop > lastScrollTop && !isScrolled) {
+    if (currentScrollTop > 100 && !isScrolled) {
         header.classList.add('scrolled');
         console.log('Added scrolled class:', currentScrollTop);
-    } else if ((currentScrollTop <= 100 || currentScrollTop < lastScrollTop) && isScrolled) {
+    } else if (currentScrollTop <= 100 && isScrolled) {
         header.classList.remove('scrolled');
         console.log('Removed scrolled class:', currentScrollTop);
     }
@@ -102,21 +110,22 @@ function handleScroll() {
     lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('language') || 'ru';
     document.documentElement.setAttribute('data-lang', savedLang);
+
     const searchInput = document.getElementById('search-input') || document.getElementById('mobile-search-input');
     if (searchInput) {
         searchInput.addEventListener('input', performSearch);
     } else {
         console.error('Search input not found');
     }
-    const orderForm = document.getElementById('order-form');
-    if (orderForm) {
-        orderForm.addEventListener('submit', handleOrderSubmit);
-    } else {
-        console.error('Order form not found');
-    }
+
+    const orderForms = document.querySelectorAll('#order-form');
+    orderForms.forEach(form => {
+        form.addEventListener('submit', handleOrderSubmit);
+    });
+
     const hamburger = document.querySelector('.hamburger');
     const closeBtn = document.querySelector('.close-btn');
     if (hamburger && closeBtn) {
@@ -127,15 +136,15 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Hamburger or close button not found');
     }
 
-    // Immediate scroll check on load
+    // Initial scroll check
     handleScroll();
 
-    // Attach scroll event for both mouse and touch with passive listener
+    // Scroll event with debounce
     const scrollHandler = () => {
         if (scrollTimeout) {
             clearTimeout(scrollTimeout);
         }
-        scrollTimeout = setTimeout(handleScroll, 50); // Debounce 50ms
+        scrollTimeout = setTimeout(handleScroll, 30); // Reduced debounce to 30ms
     };
     window.addEventListener('scroll', scrollHandler, { passive: true });
     window.addEventListener('touchmove', scrollHandler, { passive: true });
