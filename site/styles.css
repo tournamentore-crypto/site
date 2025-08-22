@@ -86,13 +86,13 @@ header img.logo {
     opacity: 0;
     transition: width 0.3s ease, opacity 0.3s ease, transform 0.3s ease; /* Smooth transition with transform */
     margin-right: 5px;
-    transform: translateX(-100%); /* Start off-screen to the left */
+    transform: translateX(100%); /* Start off-screen to the right */
     box-sizing: border-box; /* Учитывать padding в ширине */
 }
 .search-form input.active {
     width: 150px; /* Expanded width */
     opacity: 1;
-    transform: translateX(0); /* Move to align with button from left */
+    transform: translateX(0); /* Move to align with button from right */
 }
 .search-form input.desktop-only {
     display: block;
@@ -281,8 +281,8 @@ footer {
         align-items: center;
         margin: 0;
         position: absolute;
-        right: 20px; /* Лупа остается справа */
-        order: 999; /* Высокий порядок для правого расположения */
+        left: 70px; /* Начало после логотипа (50px + 20px отступ) */
+        order: 2; /* После логотипа */
     }
     .search-form input.desktop-only {
         display: none;
@@ -292,19 +292,19 @@ footer {
         width: 0; /* Initially hidden on mobile */
         opacity: 0;
         transform: translateX(-100%); /* Start off-screen to the left from logo */
-        margin-left: 60px; /* Смещение от логотипа (50px + 10px margin) */
+        margin-left: 5px; /* Пространство после логотипа */
     }
     .search-form input.mobile-only.active {
         width: 150px; /* Expanded width on mobile */
         opacity: 1;
-        transform: translateX(0); /* Move to align left-to-right from logo */
+        transform: translateX(0); /* Move to align with logo from right */
     }
     .search-form button {
-        margin-left: 0; /* No margin to keep flush with edge */
-        order: 1; /* Лупа справа */
+        margin-left: 0; /* No margin to keep flush with logo */
+        order: 1; /* Лупа справа от строки */
     }
     .language-switcher {
-        order: 2; /* After search */
+        order: 3; /* After search */
         margin: 0 5px;
     }
     .sidebar {
