@@ -70,8 +70,14 @@ function handleOrderSubmit(event) {
 
 function toggleSidebar() {
     const sidebar = document.querySelector('.sidebar');
+    const hamburger = document.querySelector('.hamburger');
     if (sidebar) {
         sidebar.classList.toggle('open');
+        if (sidebar.classList.contains('open')) {
+            if (hamburger) hamburger.classList.add('hidden'); // Hide hamburger when sidebar opens
+        } else {
+            if (hamburger) hamburger.classList.remove('hidden'); // Show hamburger when sidebar closes
+        }
     } else {
         console.error('Sidebar not found');
     }
@@ -82,6 +88,7 @@ function closeSidebar(event) {
     const hamburger = document.querySelector('.hamburger');
     if (sidebar && hamburger && !sidebar.contains(event.target) && !hamburger.contains(event.target)) {
         sidebar.classList.remove('open');
+        hamburger.classList.remove('hidden'); // Ensure hamburger is visible when clicking outside
     }
 }
 
@@ -98,7 +105,7 @@ function handleScroll() {
 
     if (Math.abs(currentScrollTop - lastScrollTop) <= delta) return;
 
-    if (currentScrollTop > 80 && !isScrolled) { /* Reduced threshold */
+    if (currentScrollTop > 80 && !isScrolled) {
         header.classList.add('scrolled');
         console.log('Added scrolled class:', currentScrollTop);
     } else if (currentScrollTop <= 80 && isScrolled) {
@@ -149,6 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
             ticking = true;
         }
     };
-    window.addEventListener('scroll', scrollHandler, { passive: false }); /* Changed to non-passive */
+    window.addEventListener('scroll', scrollHandler, { passive: false });
     window.addEventListener('touchmove', scrollHandler, { passive: false });
 });

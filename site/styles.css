@@ -44,6 +44,9 @@ header img.logo {
     padding: 10px 15px; /* Larger tap area */
     z-index: 1002; /* Above sidebar */
 }
+.hamburger.hidden {
+    display: none; /* Hide when sidebar is open */
+}
 .sidebar {
     display: none; /* Hidden on desktop */
 }
@@ -238,12 +241,15 @@ footer {
     }
     .hamburger {
         display: block; /* Show hamburger on mobile */
-        order: 1; /* Move to leftmost position */
+        order: 0; /* Leftmost position before logo */
         font-size: 2em;
-        margin-right: 15px; /* Space after hamburger */
+        margin-right: 15px; /* Space before logo */
         padding: 10px 15px;
         background-color: transparent;
         color: #333;
+    }
+    .hamburger.hidden {
+        display: none; /* Hide when sidebar is open */
     }
     .nav-links:not(.sidebar .nav-links) {
         display: none;
@@ -252,7 +258,7 @@ footer {
         display: none;
     }
     .search-form {
-        order: 2;
+        order: 3; /* After logo and language */
         margin: 0 5px;
     }
     .search-form input.desktop-only {
@@ -266,7 +272,7 @@ footer {
         width: 120px;
     }
     .language-switcher {
-        order: 3;
+        order: 2; /* After hamburger, before search */
         margin: 0 5px;
     }
     .sidebar {
