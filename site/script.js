@@ -92,11 +92,9 @@ function handleScroll() {
     if (Math.abs(currentScrollTop - lastScrollTop) <= delta) return;
 
     if (currentScrollTop > 100 && currentScrollTop > lastScrollTop && !isScrolled) {
-        // Scrolling down past 100px
         header.classList.add('scrolled');
         console.log('Added scrolled class:', currentScrollTop);
     } else if ((currentScrollTop <= 100 || currentScrollTop < lastScrollTop) && isScrolled) {
-        // Scrolling up or near top
         header.classList.remove('scrolled');
         console.log('Removed scrolled class:', currentScrollTop);
     }
@@ -128,6 +126,9 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.error('Hamburger or close button not found');
     }
+
+    // Immediate scroll check on load
+    handleScroll();
 
     // Attach scroll event for both mouse and touch with passive listener
     const scrollHandler = () => {

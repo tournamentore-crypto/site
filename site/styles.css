@@ -18,12 +18,14 @@ header {
     left: 0;
     width: 100%; /* Ensure full width */
     z-index: 1000;
-    transition: padding 0.15s ease, transform 0.15s ease; /* Fast transition */
-    will-change: padding, transform; /* Optimize animation */
+    transition: padding 0.15s ease, transform 0.15s ease, background-color 0.15s ease; /* Fast transition */
+    will-change: padding, transform, background-color; /* Optimize animation */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
 }
 header.scrolled {
     padding: 5px 20px; /* Reduced padding when scrolled */
     transform: translateY(-5px); /* Slight upward shift */
+    background-color: rgba(255, 255, 255, 0.95); /* More opaque when scrolled */
 }
 header img.logo {
     max-width: 120px;
@@ -40,6 +42,7 @@ header img.logo {
     cursor: pointer;
     color: #333;
     padding: 8px;
+    z-index: 1002; /* Above sidebar */
 }
 .sidebar {
     display: none; /* Hidden on desktop */
@@ -103,8 +106,12 @@ header img.logo {
     color: #333;
     margin: 0 10px;
     text-align: left;
-    white-space: nowrap;
+    max-width: 150px; /* Limit width to prevent overflow */
+    white-space: normal; /* Allow text wrapping */
     flex-shrink: 0;
+}
+.contact-info.mobile-only {
+    display: none; /* Hidden on desktop */
 }
 .search-results {
     margin: 20px;
@@ -219,27 +226,37 @@ footer {
     header.scrolled {
         padding: 5px 20px; /* Reduced padding when scrolled */
         transform: translateY(-5px); /* Slight upward shift */
+        background-color: rgba(255, 255, 255, 0.95); /* More opaque when scrolled */
     }
     .hamburger {
         display: block; /* Show hamburger on mobile */
+        order: 4; /* Move to right */
     }
     .nav-links:not(.sidebar .nav-links) {
         display: none; /* Hide desktop nav-links on mobile */
     }
-    .search-form:not(.sidebar .search-form) {
-        display: none; /* Hide desktop search-form on mobile */
-    }
-    .language-switcher:not(.sidebar .language-switcher) {
-        display: none; /* Hide desktop language-switcher on mobile */
-    }
-    .contact-info:not(.sidebar .contact-info) {
+    .contact-info:not(.mobile-only) {
         display: none; /* Hide desktop contact-info on mobile */
+    }
+    .search-form {
+        order: 2; /* After logo */
+        margin: 0 5px;
+    }
+    .search-form input {
+        width: 100px;
+    }
+    .search-form input.active {
+        width: 120px;
+    }
+    .language-switcher {
+        order: 3; /* After search */
+        margin: 0 5px;
     }
     .sidebar {
         display: flex; /* Show sidebar on mobile */
         position: fixed;
         top: 0;
-        left: -250px; /* Hidden off-screen, from left */
+        right: -250px; /* Hidden off-screen, from right */
         width: 250px;
         height: 100%;
         background-color: #ffffff; /* Solid white background */
@@ -247,13 +264,13 @@ footer {
         justify-content: flex-start;
         padding: 20px;
         z-index: 1001;
-        transition: left 0.3s ease; /* Slide animation from left */
-        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+        transition: right 0.3s ease; /* Slide animation from right */
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
         box-sizing: border-box;
         overflow-x: hidden; /* Prevent horizontal overflow */
     }
     .sidebar.open {
-        left: 0; /* Slide in from left */
+        right: 0; /* Slide in from right */
     }
     .sidebar .close-btn {
         display: block; /* Show close button on mobile */
@@ -274,25 +291,11 @@ footer {
         width: 100%;
         text-align: left;
     }
-    .sidebar .search-form {
+    .contact-info.mobile-only {
+        display: block; /* Show contacts in footer on mobile */
+        text-align: center;
         margin: 10px 0;
-        width: 100%;
-    }
-    .sidebar .search-form input {
-        width: 100%;
-        padding: 8px;
-    }
-    .sidebar .language-switcher {
-        margin: 10px 0;
-        width: 100%;
-        text-align: left;
-    }
-    .sidebar .contact-info {
-        text-align: left;
-        margin: 10px 0;
-        padding: 0 5px;
         font-size: 0.9em;
-        max-width: 100%;
     }
     .container {
         padding-top: 60px; /* Adjusted for smaller header */
