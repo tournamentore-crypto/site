@@ -10,27 +10,31 @@
 <body>
     <header>
         <img src="logo.png" alt="Logo" class="logo">
-        <div class="nav-links">
-            <a href="index.html">Главная</a>
-            <a href="products.html">Продукция</a>
-            <a href="about.html" class="active">О нас</a>
-            <a href="contacts.html">Контакты</a>
-            <a href="order.html">Заказ</a>
-            <a href="suppliers.html">Поставщикам</a>
-            <a href="vacancies.html">Вакансии</a>
-        </div>
-        <div class="search-form">
-            <input type="text" id="search-input" placeholder="Поиск...">
-            <button onclick="toggleSearch()">&#128269;</button>
-        </div>
-        <div class="language-switcher" onclick="toggleLanguage()">RU/EN</div>
-        <div class="contact-info">
-            <span class="ru">+7 (4812) 33-98-97</span>
-            <span class="en">+7 (4812) 33-98-97</span>
-            <br>
-            <span class="ru">info@smoldok.ru</span>
-            <span class="en">info@smoldok.ru</span>
-        </div>
+        <button class="hamburger">☰</button>
+        <nav class="sidebar">
+            <button class="close-btn">✕</button>
+            <div class="nav-links">
+                <a href="index.html">Главная</a>
+                <a href="products.html">Продукция</a>
+                <a href="about.html" class="active">О нас</a>
+                <a href="contacts.html">Контакты</a>
+                <a href="order.html">Заказ</a>
+                <a href="suppliers.html">Поставщикам</a>
+                <a href="vacancies.html">Вакансии</a>
+            </div>
+            <div class="search-form">
+                <input type="text" id="search-input" placeholder="Поиск...">
+                <button onclick="toggleSearch()">&#128269;</button>
+            </div>
+            <div class="language-switcher" onclick="toggleLanguage()">RU/EN</div>
+            <div class="contact-info">
+                <span class="ru">+7 (4812) 33-98-97</span>
+                <span class="en">+7 (4812) 33-98-97</span>
+                <br>
+                <span class="ru">info@smoldok.ru</span>
+                <span class="en">info@smoldok.ru</span>
+            </div>
+        </nav>
     </header>
     <div class="search-results" id="search-results" style="display: none;"></div>
     <div class="container">

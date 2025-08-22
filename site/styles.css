@@ -14,7 +14,6 @@ header {
     justify-content: space-between;
     flex-wrap: wrap;
     border-bottom: 2px solid #c8e6c9; /* Green border */
-    text-align: center;
     position: fixed;
     top: 0;
     left: 0;
@@ -34,14 +33,39 @@ header img.logo {
     margin-left: 10px; /* Shift logo left */
     flex-shrink: 0; /* Prevent logo from shrinking */
 }
-header .nav-links {
+.hamburger {
+    display: none; /* Hidden on desktop */
+    font-size: 1.5em;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    padding: 8px;
+}
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+}
+.close-btn {
+    display: none; /* Hidden on desktop */
+    font-size: 1.5em;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    align-self: flex-end;
+}
+.nav-links {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     margin: 0 10px;
     flex-grow: 0.5; /* Reduced to give more space to contact-info */
 }
-header a {
+.nav-links a {
     color: black; /* Black text */
     text-decoration: none;
     margin: 0 15px;
@@ -50,33 +74,29 @@ header a {
     border-radius: 5px;
     transition: background-color 0.15s ease, color 0.15s ease; /* Fast transition */
 }
-header a:hover, header a.active {
+.nav-links a:hover, .nav-links a.active {
     background-color: #4caf50; /* Green highlight */
     color: white;
 }
-header .search-form {
+.search-form {
     display: flex;
     align-items: center;
     margin: 0 5px 0 10px; /* Shift left with smaller margin */
     position: relative;
-    flex-shrink: 0; /* Prevent search form from shrinking */
 }
-header .search-form input {
+.search-form input {
     padding: 8px;
     border: 1px solid #c8e6c9;
     border-radius: 5px;
-    width: 0;
-    opacity: 0;
+    width: 150px;
+    opacity: 1;
     transition: width 0.15s ease, opacity 0.15s ease; /* Fast transition */
-    position: absolute;
-    right: 40px;
-    top: 0;
 }
-header .search-form input.active {
+.search-form input.active {
     width: 150px;
     opacity: 1;
 }
-header .search-form button {
+.search-form button {
     padding: 8px 12px;
     background-color: #4caf50;
     color: white;
@@ -84,18 +104,17 @@ header .search-form button {
     border-radius: 5px;
     cursor: pointer;
 }
-header .search-form button:hover {
+.search-form button:hover {
     background-color: #388e3c;
 }
-header .language-switcher {
+.language-switcher {
     cursor: pointer;
     font-weight: bold;
     color: black;
     margin: 0 5px 0 10px; /* Shift left with smaller margin */
     padding: 8px 12px;
-    flex-shrink: 0; /* Prevent language switcher from shrinking */
 }
-header .contact-info {
+.contact-info {
     font-size: 0.85em; /* Smaller font for desktop */
     color: #333;
     margin: 0 10px 0 40px; /* Shift further left */
@@ -214,49 +233,68 @@ footer {
 }
 @media (max-width: 768px) {
     header {
-        flex-direction: column;
         padding: 10px 20px;
+        justify-content: space-between;
         align-items: center;
     }
     header.scrolled {
         padding: 5px 20px; /* Reduced padding when scrolled */
+        transform: translateY(-10px); /* Slight upward shift */
     }
-    header img.logo {
-        margin: 0 0 10px 10px; /* Shift logo left */
+    .hamburger {
+        display: block; /* Show hamburger on mobile */
     }
-    header .nav-links {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        right: -100%; /* Hidden off-screen */
+        width: 250px;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.95);
         flex-direction: column;
-        margin: 10px 0;
-        flex-grow: 0; /* Disable flex-grow on mobile */
+        justify-content: flex-start;
+        padding: 20px;
+        z-index: 1001;
+        transition: right 0.3s ease; /* Slide animation */
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
     }
-    header a {
+    .sidebar.open {
+        right: 0; /* Slide in */
+    }
+    .close-btn {
+        display: block; /* Show close button on mobile */
+    }
+    .nav-links {
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 20px 0;
+        flex-grow: 0;
+    }
+    .nav-links a {
         margin: 5px 0;
+        width: 100%;
+        text-align: left;
     }
-    header .search-form {
-        margin: 10px 0 10px 10px; /* Shift left */
-    }
-    header .search-form input.active {
+    .search-form {
+        margin: 10px 0;
         width: 100%;
     }
-    header .language-switcher {
-        margin: 10px 0 10px 10px; /* Shift left */
+    .search-form input {
+        width: 100%;
     }
-    header .contact-info {
-        text-align: center; /* Center for mobile */
+    .language-switcher {
         margin: 10px 0;
-        padding: 0 5px; /* Add padding to prevent edge clipping */
-        font-size: 0.65em; /* Smaller font for mobile */
-        max-width: 80%; /* Tighter width limit */
-        overflow: hidden; /* Hide overflow */
-        text-overflow: ellipsis; /* Add ellipsis */
+        width: 100%;
+        text-align: left;
     }
-    .feature-box {
-        flex: 1 1 100%;
-    }
-    .order-form {
-        padding: 15px;
+    .contact-info {
+        text-align: left;
+        margin: 10px 0;
+        padding: 0 5px;
+        font-size: 0.85em; /* Adjusted for mobile */
+        max-width: 100%;
     }
     .container {
-        padding-top: 120px; /* Increased padding for mobile */
+        padding-top: 70px; /* Adjusted for smaller header */
     }
 }
