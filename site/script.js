@@ -10,7 +10,7 @@ function toggleLanguage() {
 }
 
 function toggleSearch() {
-    const searchInput = document.getElementById('search-input');
+    const searchInput = document.getElementById('search-input') || document.getElementById('mobile-search-input');
     searchInput.classList.toggle('active');
     if (searchInput.classList.contains('active')) {
         searchInput.focus();
@@ -21,7 +21,8 @@ function toggleSearch() {
 }
 
 function performSearch() {
-    const query = document.getElementById('search-input').value.toLowerCase();
+    const searchInput = document.getElementById('search-input') || document.getElementById('mobile-search-input');
+    const query = searchInput.value.toLowerCase();
     const resultsDiv = document.getElementById('search-results');
     resultsDiv.innerHTML = '';
     if (!query) {
@@ -106,7 +107,7 @@ function handleScroll() {
 document.addEventListener('DOMContentLoaded', function() {
     const savedLang = localStorage.getItem('language') || 'ru';
     document.documentElement.setAttribute('data-lang', savedLang);
-    const searchInput = document.getElementById('search-input');
+    const searchInput = document.getElementById('search-input') || document.getElementById('mobile-search-input');
     if (searchInput) {
         searchInput.addEventListener('input', performSearch);
     } else {

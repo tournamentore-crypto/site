@@ -8,11 +8,10 @@ body {
 }
 header {
     background-color: rgba(255, 255, 255, 0.8); /* White, slightly dimmer */
-    padding: 15px 20px; /* Normal state */
+    padding: 10px 20px; /* Normal state */
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
     border-bottom: 2px solid #c8e6c9; /* Green border */
     position: fixed;
     top: 0;
@@ -24,12 +23,12 @@ header {
 }
 header.scrolled {
     padding: 5px 20px; /* Reduced padding when scrolled */
-    transform: translateY(-10px); /* Slight upward shift */
+    transform: translateY(-5px); /* Slight upward shift */
 }
 header img.logo {
-    max-width: 150px;
+    max-width: 120px;
     height: auto; /* Maintain proportions */
-    margin-right: 20px;
+    margin-right: 15px;
     margin-left: 10px; /* Shift logo left */
     flex-shrink: 0; /* Prevent logo from shrinking */
 }
@@ -43,34 +42,20 @@ header img.logo {
     padding: 8px;
 }
 .sidebar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    padding: 20px;
-}
-.close-btn {
     display: none; /* Hidden on desktop */
-    font-size: 1.5em;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #333;
-    align-self: flex-end;
 }
 .nav-links {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
     margin: 0 10px;
-    flex-grow: 0.5; /* Reduced to give more space to contact-info */
 }
 .nav-links a {
     color: black; /* Black text */
     text-decoration: none;
-    margin: 0 15px;
+    margin: 0 10px;
     font-weight: bold;
-    padding: 8px 12px;
+    padding: 6px 10px;
     border-radius: 5px;
     transition: background-color 0.15s ease, color 0.15s ease; /* Fast transition */
 }
@@ -81,28 +66,27 @@ header img.logo {
 .search-form {
     display: flex;
     align-items: center;
-    margin: 0 5px 0 10px; /* Shift left with smaller margin */
+    margin: 0 10px;
     position: relative;
 }
 .search-form input {
-    padding: 8px;
+    padding: 6px;
     border: 1px solid #c8e6c9;
     border-radius: 5px;
-    width: 150px;
-    opacity: 1;
-    transition: width 0.15s ease, opacity 0.15s ease; /* Fast transition */
+    width: 120px;
+    transition: width 0.15s ease;
 }
 .search-form input.active {
     width: 150px;
-    opacity: 1;
 }
 .search-form button {
-    padding: 8px 12px;
+    padding: 6px 10px;
     background-color: #4caf50;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-left: 5px;
 }
 .search-form button:hover {
     background-color: #388e3c;
@@ -111,21 +95,16 @@ header img.logo {
     cursor: pointer;
     font-weight: bold;
     color: black;
-    margin: 0 5px 0 10px; /* Shift left with smaller margin */
-    padding: 8px 12px;
+    margin: 0 10px;
+    padding: 6px 10px;
 }
 .contact-info {
-    font-size: 0.85em; /* Smaller font for desktop */
+    font-size: 0.9em;
     color: #333;
-    margin: 0 10px 0 40px; /* Shift further left */
-    padding-left: 10px; /* Additional left padding */
-    text-align: left; /* Align left for desktop */
-    white-space: normal; /* Allow wrapping */
-    max-width: 200px; /* Limit width */
-    overflow: hidden; /* Hide overflow */
-    text-overflow: ellipsis; /* Add ellipsis */
-    flex-shrink: 0; /* Prevent shrinking */
-    flex-basis: 200px; /* Reserve space */
+    margin: 0 10px;
+    text-align: left;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 .search-results {
     margin: 20px;
@@ -147,7 +126,7 @@ header img.logo {
     max-width: 1200px;
     margin: 20px auto;
     padding: 0 20px;
-    padding-top: 80px; /* Add padding to avoid content overlap with fixed header */
+    padding-top: 60px; /* Adjusted for fixed header */
 }
 h2 {
     color: #2e7d32; /* Dark green for headings */
@@ -239,62 +218,83 @@ footer {
     }
     header.scrolled {
         padding: 5px 20px; /* Reduced padding when scrolled */
-        transform: translateY(-10px); /* Slight upward shift */
+        transform: translateY(-5px); /* Slight upward shift */
     }
     .hamburger {
         display: block; /* Show hamburger on mobile */
     }
+    .nav-links:not(.sidebar .nav-links) {
+        display: none; /* Hide desktop nav-links on mobile */
+    }
+    .search-form:not(.sidebar .search-form) {
+        display: none; /* Hide desktop search-form on mobile */
+    }
+    .language-switcher:not(.sidebar .language-switcher) {
+        display: none; /* Hide desktop language-switcher on mobile */
+    }
+    .contact-info:not(.sidebar .contact-info) {
+        display: none; /* Hide desktop contact-info on mobile */
+    }
     .sidebar {
+        display: flex; /* Show sidebar on mobile */
         position: fixed;
         top: 0;
-        right: -100%; /* Hidden off-screen */
+        left: -250px; /* Hidden off-screen, from left */
         width: 250px;
         height: 100%;
-        background-color: rgba(255, 255, 255, 0.95);
+        background-color: #ffffff; /* Solid white background */
         flex-direction: column;
         justify-content: flex-start;
         padding: 20px;
         z-index: 1001;
-        transition: right 0.3s ease; /* Slide animation */
-        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+        transition: left 0.3s ease; /* Slide animation from left */
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+        box-sizing: border-box;
+        overflow-x: hidden; /* Prevent horizontal overflow */
     }
     .sidebar.open {
-        right: 0; /* Slide in */
+        left: 0; /* Slide in from left */
     }
-    .close-btn {
+    .sidebar .close-btn {
         display: block; /* Show close button on mobile */
+        align-self: flex-end;
+        font-size: 1.5em;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #333;
     }
-    .nav-links {
+    .sidebar .nav-links {
         flex-direction: column;
         align-items: flex-start;
         margin: 20px 0;
-        flex-grow: 0;
     }
-    .nav-links a {
+    .sidebar .nav-links a {
         margin: 5px 0;
         width: 100%;
         text-align: left;
     }
-    .search-form {
+    .sidebar .search-form {
         margin: 10px 0;
         width: 100%;
     }
-    .search-form input {
+    .sidebar .search-form input {
         width: 100%;
+        padding: 8px;
     }
-    .language-switcher {
+    .sidebar .language-switcher {
         margin: 10px 0;
         width: 100%;
         text-align: left;
     }
-    .contact-info {
+    .sidebar .contact-info {
         text-align: left;
         margin: 10px 0;
         padding: 0 5px;
-        font-size: 0.85em; /* Adjusted for mobile */
+        font-size: 0.9em;
         max-width: 100%;
     }
     .container {
-        padding-top: 70px; /* Adjusted for smaller header */
+        padding-top: 60px; /* Adjusted for smaller header */
     }
 }
