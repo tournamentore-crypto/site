@@ -226,7 +226,7 @@ footer {
 @media (max-width: 768px) {
     header {
         padding: 10px 20px;
-        justify-content: space-between;
+        justify-content: flex-start; /* Align items to start */
         align-items: center;
         flex-wrap: nowrap;
     }
@@ -238,12 +238,12 @@ footer {
     }
     .hamburger {
         display: block; /* Show hamburger on mobile */
-        order: 4; /* Far right */
-        font-size: 2em; /* Large icon */
-        margin-left: auto; /* Ensure rightmost position */
-        padding: 10px 15px; /* Large tap area */
-        background-color: transparent; /* No background */
-        color: #333; /* Visible color */
+        order: 1; /* Move to leftmost position */
+        font-size: 2em;
+        margin-right: 15px; /* Space after hamburger */
+        padding: 10px 15px;
+        background-color: transparent;
+        color: #333;
     }
     .nav-links:not(.sidebar .nav-links) {
         display: none;
@@ -273,7 +273,7 @@ footer {
         display: flex;
         position: fixed;
         top: 0;
-        right: -250px;
+        left: -250px; /* Slide from left */
         width: 250px;
         height: 100%;
         background-color: #ffffff;
@@ -281,13 +281,13 @@ footer {
         justify-content: flex-start;
         padding: 20px;
         z-index: 1001;
-        transition: right 0.3s ease;
-        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+        transition: left 0.3s ease; /* Slide from left */
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Shadow on right */
         box-sizing: border-box;
         overflow-x: hidden;
     }
     .sidebar.open {
-        right: 0;
+        left: 0; /* Slide in from left */
     }
     .sidebar .close-btn {
         display: block;
