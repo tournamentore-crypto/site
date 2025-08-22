@@ -86,13 +86,13 @@ header img.logo {
     opacity: 0;
     transition: width 0.3s ease, opacity 0.3s ease, transform 0.3s ease; /* Smooth transition with transform */
     margin-right: 5px;
-    transform: translateX(100%); /* Start off-screen to the right */
+    transform: translateX(-100%); /* Start off-screen to the left */
     box-sizing: border-box; /* Учитывать padding в ширине */
 }
 .search-form input.active {
     width: 150px; /* Expanded width */
     opacity: 1;
-    transform: translateX(0); /* Move to align with button from right */
+    transform: translateX(0); /* Move to align with button from left */
 }
 .search-form input.desktop-only {
     display: block;
@@ -281,7 +281,7 @@ footer {
         align-items: center;
         margin: 0;
         position: absolute;
-        right: 20px; /* Перемещаем лупу и форму на правый край */
+        right: 20px; /* Лупа остается справа */
         order: 999; /* Высокий порядок для правого расположения */
     }
     .search-form input.desktop-only {
@@ -291,13 +291,13 @@ footer {
         display: block;
         width: 0; /* Initially hidden on mobile */
         opacity: 0;
-        transform: translateX(100%); /* Start off-screen to the right */
-        margin-left: 5px; /* Пространство слева от лупы */
+        transform: translateX(-100%); /* Start off-screen to the left from logo */
+        margin-left: 60px; /* Смещение от логотипа (50px + 10px margin) */
     }
     .search-form input.mobile-only.active {
         width: 150px; /* Expanded width on mobile */
         opacity: 1;
-        transform: translateX(0); /* Move to align with button from right */
+        transform: translateX(0); /* Move to align left-to-right from logo */
     }
     .search-form button {
         margin-left: 0; /* No margin to keep flush with edge */
