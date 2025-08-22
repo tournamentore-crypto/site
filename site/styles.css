@@ -30,9 +30,11 @@ header.scrolled {
 header img.logo {
     max-width: 120px;
     height: auto;
+    aspect-ratio: 1 / 1; /* Square shape */
     margin-right: 15px;
     margin-left: 10px;
     flex-shrink: 0;
+    object-fit: contain; /* Preserve image inside square */
 }
 .hamburger {
     display: none; /* Hidden on desktop */
@@ -258,18 +260,22 @@ footer {
         display: none;
     }
     .search-form {
+        display: none; /* Hide by default on mobile */
         order: 3; /* After logo and language */
         margin: 0 5px;
+    }
+    .search-form.show {
+        display: flex; /* Show when sidebar is open */
     }
     .search-form input.desktop-only {
         display: none;
     }
     .search-form input.mobile-only {
         display: block;
-        width: 100px;
+        width: 150px; /* Full width when shown */
     }
     .search-form input.active {
-        width: 120px;
+        width: 180px; /* Adjusted for full visibility */
     }
     .language-switcher {
         order: 2; /* After hamburger, before search */

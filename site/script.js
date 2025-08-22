@@ -71,12 +71,15 @@ function handleOrderSubmit(event) {
 function toggleSidebar() {
     const sidebar = document.querySelector('.sidebar');
     const hamburger = document.querySelector('.hamburger');
+    const searchForm = document.querySelector('.search-form');
     if (sidebar) {
         sidebar.classList.toggle('open');
         if (sidebar.classList.contains('open')) {
-            if (hamburger) hamburger.classList.add('hidden'); // Hide hamburger when sidebar opens
+            if (hamburger) hamburger.classList.add('hidden'); // Hide hamburger
+            if (searchForm) searchForm.classList.add('show'); // Show search form
         } else {
-            if (hamburger) hamburger.classList.remove('hidden'); // Show hamburger when sidebar closes
+            if (hamburger) hamburger.classList.remove('hidden'); // Show hamburger
+            if (searchForm) searchForm.classList.remove('show'); // Hide search form
         }
     } else {
         console.error('Sidebar not found');
@@ -86,9 +89,11 @@ function toggleSidebar() {
 function closeSidebar(event) {
     const sidebar = document.querySelector('.sidebar');
     const hamburger = document.querySelector('.hamburger');
+    const searchForm = document.querySelector('.search-form');
     if (sidebar && hamburger && !sidebar.contains(event.target) && !hamburger.contains(event.target)) {
         sidebar.classList.remove('open');
-        hamburger.classList.remove('hidden'); // Ensure hamburger is visible when clicking outside
+        hamburger.classList.remove('hidden'); // Ensure hamburger is visible
+        if (searchForm) searchForm.classList.remove('show'); // Hide search form
     }
 }
 
