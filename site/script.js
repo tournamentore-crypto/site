@@ -1,12 +1,11 @@
 let lastScrollTop = 0;
-let scrollTimeout = null;
 
 function toggleLanguage() {
     const currentLang = document.documentElement.getAttribute('data-lang');
     const newLang = currentLang === 'ru' ? 'en' : 'ru';
     document.documentElement.setAttribute('data-lang', newLang);
     localStorage.setItem('language', newLang);
-    performSearch(); // Update search results on language change
+    performSearch();
 }
 
 function toggleSearch() {
@@ -94,15 +93,15 @@ function handleScroll() {
     }
 
     const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const delta = 20; /* Reduced delta for smoother response */
+    const delta = 10; /* Reduced for sensitivity */
     const isScrolled = header.classList.contains('scrolled');
 
     if (Math.abs(currentScrollTop - lastScrollTop) <= delta) return;
 
-    if (currentScrollTop > 100 && !isScrolled) {
+    if (currentScrollTop > 80 && !isScrolled) { /* Reduced threshold */
         header.classList.add('scrolled');
         console.log('Added scrolled class:', currentScrollTop);
-    } else if (currentScrollTop <= 100 && isScrolled) {
+    } else if (currentScrollTop <= 80 && isScrolled) {
         header.classList.remove('scrolled');
         console.log('Removed scrolled class:', currentScrollTop);
     }
@@ -139,13 +138,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial scroll check
     handleScroll();
 
-    // Scroll event with debounce
+    // Scroll event with requestAnimationFrame
+    let ticking = false;
     const scrollHandler = () => {
-        if (scrollTimeout) {
-            clearTimeout(scrollTimeout);
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                handleScroll();
+                ticking = false;
+            });
+            ticking = true;
         }
-        scrollTimeout = setTimeout(handleScroll, 30); // Reduced debounce to 30ms
     };
-    window.addEventListener('scroll', scrollHandler, { passive: true });
-    window.addEventListener('touchmove', scrollHandler, { passive: true });
+    window.addEventListener('scroll', scrollHandler, { passive: false }); /* Changed to non-passive */
+    window.addEventListener('touchmove', scrollHandler, { passive: false });
 });
