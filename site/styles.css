@@ -282,11 +282,15 @@ footer {
         display: none;
     }
     .search-form {
-        display: none; /* Отключаем поиск на мобильных */
+        display: none;
     }
     .language-switcher {
-        order: 2;
-        margin: 0 5px;
+        order: initial;
+        margin: 0;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 6px 10px;
     }
     .sidebar {
         display: flex;
