@@ -37,12 +37,12 @@ function toggleSearch(event) {
 function performSearch() {
     const searchInput = document.querySelector('.search-form input.active');
     if (searchInput) {
-        const query = searchInput.value.toLowerCase();
+        const query = searchInput.value.toLowerCase().trim();
         const resultsDiv = document.getElementById('search-results');
-        console.log('Performing search with query:', query, 'ResultsDiv:', resultsDiv);
+        console.log('Performing search with query:', query, 'ResultsDiv:', resultsDiv, 'Input:', searchInput);
         if (resultsDiv) {
             resultsDiv.innerHTML = '';
-            if (!query.trim()) { // Check for empty or whitespace-only input
+            if (!query) {
                 resultsDiv.style.display = 'none';
                 resultsDiv.classList.remove('active');
                 return;
@@ -79,6 +79,9 @@ function performSearch() {
                 }
             } else {
                 console.error('Container not found for search');
+                resultsDiv.innerHTML = `<div class="result">Error: Container not found</div>`;
+                resultsDiv.style.display = 'block';
+                resultsDiv.classList.add('active');
             }
         } else {
             console.error('Search results div not found');

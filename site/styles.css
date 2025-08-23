@@ -76,7 +76,6 @@ header img.logo {
     align-items: center;
     margin: 0 10px;
     position: relative;
-    flex-direction: row-reverse; /* Лупа справа */
 }
 .search-form input {
     padding: 6px;
@@ -86,13 +85,13 @@ header img.logo {
     opacity: 0;
     transition: width 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
     margin-right: 5px;
-    transform: translateX(-100%); /* Анимация справа-налево */
+    transform: translateX(-100%); /* Анимация только для строки */
     box-sizing: border-box;
 }
 .search-form input.active {
     width: 150px;
     opacity: 1;
-    transform: translateX(0); /* Конечная позиция */
+    transform: translateX(0);
 }
 .search-form input.desktop-only {
     display: block;
@@ -113,6 +112,8 @@ header img.logo {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative; /* Статичная позиция */
+    z-index: 2; /* Над строкой */
 }
 .search-form button:hover {
     background-color: #388e3c;
@@ -290,7 +291,6 @@ footer {
         top: 50%;
         transform: translateY(-50%);
         order: 999;
-        flex-direction: row-reverse; /* Лупа справа */
     }
     .search-form input.desktop-only {
         display: none;
@@ -299,8 +299,9 @@ footer {
         display: block;
         width: 0;
         opacity: 0;
-        transform: translateX(-100%); /* Анимация справа-налево */
+        transform: translateX(-100%); /* Анимация строки справа-налево */
         margin-right: 5px;
+        position: relative; /* Относительная позиция для анимации */
     }
     .search-form input.mobile-only.active {
         width: 150px;
@@ -308,8 +309,20 @@ footer {
         transform: translateX(0); /* Конечная позиция */
     }
     .search-form button {
-        margin-right: 0;
-        order: 1;
+        padding: 6px 10px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: 5px;
+        min-width: 40px;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: static; /* Статичная лупа */
+        z-index: 2;
     }
     .language-switcher {
         order: 2;
