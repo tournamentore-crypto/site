@@ -76,7 +76,7 @@ header img.logo {
     align-items: center;
     margin: 0 10px;
     position: relative;
-    flex-direction: row-reverse;
+    flex-direction: row-reverse; /* Лупа справа */
 }
 .search-form input {
     padding: 6px;
@@ -86,13 +86,13 @@ header img.logo {
     opacity: 0;
     transition: width 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
     margin-right: 5px;
-    transform: translateX(-100%);
+    transform: translateX(-100%); /* Анимация справа-налево */
     box-sizing: border-box;
 }
 .search-form input.active {
     width: 150px;
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(0); /* Конечная позиция */
 }
 .search-form input.desktop-only {
     display: block;
@@ -286,10 +286,11 @@ footer {
         align-items: center;
         margin: 0;
         position: absolute;
-        right: 20px; /* Fixed position to the right */
+        right: 20px;
         top: 50%;
         transform: translateY(-50%);
         order: 999;
+        flex-direction: row-reverse; /* Лупа справа */
     }
     .search-form input.desktop-only {
         display: none;
@@ -298,16 +299,16 @@ footer {
         display: block;
         width: 0;
         opacity: 0;
-        transform: translateX(100%); /* Start from right and move left */
-        margin-left: 5px;
+        transform: translateX(-100%); /* Анимация справа-налево */
+        margin-right: 5px;
     }
     .search-form input.mobile-only.active {
         width: 150px;
         opacity: 1;
-        transform: translateX(0); /* Move to align with button from right */
+        transform: translateX(0); /* Конечная позиция */
     }
     .search-form button {
-        margin-left: 0;
+        margin-right: 0;
         order: 1;
     }
     .language-switcher {
@@ -320,7 +321,7 @@ footer {
         top: 0;
         left: -250px;
         width: 250px;
-        height: 100vh; /* Ensure full height */
+        height: 100vh;
         background-color: #ffffff;
         flex-direction: column;
         justify-content: flex-start;
@@ -329,7 +330,7 @@ footer {
         transition: left 0.3s ease;
         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
         box-sizing: border-box;
-        overflow-y: auto; /* Scroll if content overflows */
+        overflow-y: auto;
     }
     .sidebar.open {
         left: 0;
@@ -364,7 +365,7 @@ footer {
     }
     .search-results {
         position: absolute;
-        top: 100%; /* Position just below search form */
+        top: 100%; /* Just below search form */
         left: 0;
         width: 100%;
         margin: 0;

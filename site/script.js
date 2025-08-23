@@ -42,7 +42,7 @@ function performSearch() {
         console.log('Performing search with query:', query, 'ResultsDiv:', resultsDiv);
         if (resultsDiv) {
             resultsDiv.innerHTML = '';
-            if (!query) {
+            if (!query.trim()) { // Check for empty or whitespace-only input
                 resultsDiv.style.display = 'none';
                 resultsDiv.classList.remove('active');
                 return;
@@ -57,7 +57,7 @@ function performSearch() {
                         const result = document.createElement('div');
                         result.className = 'result';
                         const highlightedText = text.innerHTML.replace(
-                            new RegExp(query, 'gi'),
+                            new RegExp(`(${query})`, 'gi'),
                             match => `<span class="highlight">${match}</span>`
                         );
                         result.innerHTML = highlightedText;
@@ -152,7 +152,7 @@ function handleNavigation(event) {
             event.preventDefault();
             const orderForm = document.querySelector('#order-form');
             if (orderForm) {
-                orderForm.scrollIntoView({ behavior: 'smooth' }); // Плавная прокрутка к форме
+                orderForm.scrollIntoView({ behavior: 'smooth' });
                 const sidebar = document.querySelector('.sidebar');
                 if (sidebar && sidebar.classList.contains('open')) {
                     sidebar.classList.remove('open');
@@ -173,9 +173,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (searchInputs.length > 0 && searchButton) {
         searchButton.addEventListener('click', toggleSearch);
         searchInputs.forEach(input => {
-            input.addEventListener('input', performSearch); // Trigger search on input
-            input.addEventListener('change', performSearch); // Trigger on change
-            input.addEventListener('touchend', performSearch); // Trigger on touch
+            input.addEventListener('input', performSearch);
+            input.addEventListener('change', performSearch);
+            input.addEventListener('touchend', performSearch);
         });
         console.log('Search initialized - Inputs:', searchInputs, 'Button:', searchButton);
     } else {
@@ -197,13 +197,11 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Hamburger or close button not found');
     }
 
-    // Обработчик навигации
     const navLinks = document.querySelectorAll('.nav-links a');
     navLinks.forEach(link => {
         link.addEventListener('click', handleNavigation);
     });
 
-    // Initial scroll check
     handleScroll();
 
     let ticking = false;
