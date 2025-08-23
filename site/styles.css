@@ -4,53 +4,53 @@ body {
     padding: 0;
     line-height: 1.6;
     color: #333;
-    background-color: #f4f7f3; /* Light green background */
+    background-color: #f4f7f3;
 }
 header {
-    background-color: rgba(255, 255, 255, 0.8); /* White, slightly dimmer */
-    padding: 20px 20px; /* Increased for visibility */
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px 20px;
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Исходное выравнивание */
-    border-bottom: 2px solid #c8e6c9; /* Green border */
+    justify-content: space-between;
+    border-bottom: 2px solid #c8e6c9;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%; /* Ensure full width */
+    width: 100%;
     z-index: 1000;
-    transition: padding 0.3s ease, background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Explicit transitions */
+    transition: padding 0.3s ease, background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     box-sizing: border-box;
 }
 header.scrolled {
-    padding: 10px 20px; /* More noticeable reduction */
-    background-color: #ffffff; /* Solid white */
-    transform: translateY(-10px); /* Stronger shift */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+    padding: 10px 20px;
+    background-color: #ffffff;
+    transform: translateY(-10px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 header img.logo {
-    max-width: 50px; /* Match your 50x50 logo */
+    max-width: 120px;
     height: auto;
-    aspect-ratio: 1 / 1; /* Square shape */
-    margin-right: 5px; /* Маленький отступ для строки поиска */
+    aspect-ratio: 1 / 1;
+    margin-right: 15px;
     margin-left: 10px;
     flex-shrink: 0;
-    object-fit: contain; /* Preserve image inside square */
+    object-fit: contain;
 }
 .hamburger {
-    display: none; /* Hidden on desktop */
-    font-size: 2em; /* Larger for visibility */
+    display: none;
+    font-size: 2em;
     background: none;
     border: none;
     cursor: pointer;
     color: #333;
-    padding: 10px 15px; /* Larger tap area */
-    z-index: 1002; /* Above sidebar */
+    padding: 10px 15px;
+    z-index: 1002;
 }
 .hamburger.hidden {
-    display: none; /* Hide when sidebar is open */
+    display: none;
 }
 .sidebar {
-    display: none; /* Hidden on desktop */
+    display: none;
 }
 .nav-links {
     display: flex;
@@ -74,25 +74,25 @@ header img.logo {
 .search-form {
     display: flex;
     align-items: center;
-    margin: 0;
+    margin: 0 10px;
     position: relative;
-    flex-direction: row-reverse; /* Input left of button */
+    flex-direction: row-reverse;
 }
 .search-form input {
     padding: 6px;
     border: 1px solid #c8e6c9;
     border-radius: 5px;
-    width: 0; /* Initially hidden */
+    width: 0;
     opacity: 0;
-    transition: width 0.3s ease, opacity 0.3s ease, transform 0.3s ease; /* Smooth transition with transform */
+    transition: width 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
     margin-right: 5px;
-    transform: translateX(100%); /* Start off-screen to the right */
-    box-sizing: border-box; /* Учитывать padding в ширине */
+    transform: translateX(-100%);
+    box-sizing: border-box;
 }
 .search-form input.active {
-    width: 150px; /* Expanded width */
+    width: 150px;
     opacity: 1;
-    transform: translateX(0); /* Move to align with button from right */
+    transform: translateX(0);
 }
 .search-form input.desktop-only {
     display: block;
@@ -107,13 +107,12 @@ header img.logo {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-left: 5px; /* Оставляем место для строки поиска */
-    min-width: 40px; /* Увеличенная кликабельная область */
-    min-height: 40px; /* Увеличенная кликабельная область */
+    margin-left: 5px;
+    min-width: 40px;
+    min-height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative; /* Убедимся, что область кликабельна */
 }
 .search-form button:hover {
     background-color: #388e3c;
@@ -138,13 +137,21 @@ header img.logo {
     display: none;
 }
 .search-results {
-    margin: 20px;
     padding: 10px;
     border: 1px solid #c8e6c9;
     border-radius: 5px;
     background-color: #f1f8f1;
-    position: relative;
-    z-index: 999;
+    position: fixed;
+    bottom: 0; /* Фиксируем внизу экрана */
+    left: 0;
+    width: 100%;
+    z-index: 900; /* Ниже шапки (1000), но выше контента */
+    box-sizing: border-box;
+    transform: translateY(100%); /* Скрываем по умолчанию */
+    transition: transform 0.3s ease; /* Анимация появления */
+}
+.search-results.active {
+    transform: translateY(0); /* Появление снизу */
 }
 .search-results .result {
     padding: 5px;
@@ -157,7 +164,7 @@ header img.logo {
     max-width: 1200px;
     margin: 20px auto;
     padding: 0 20px;
-    padding-top: 80px; /* Increased for larger header */
+    padding-top: 80px; /* Учитываем высоту шапки */
 }
 h2 {
     color: #2e7d32;
@@ -244,31 +251,29 @@ footer {
 @media (max-width: 768px) {
     header {
         padding: 10px 20px;
-        justify-content: flex-start; /* Align items to start */
+        justify-content: flex-start;
         align-items: center;
         flex-wrap: nowrap;
     }
     header.scrolled {
         padding: 5px 20px;
-        background-color: #ffffff;
-        transform: translateY(-5px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        transform: translateY(-10px);
     }
     .hamburger {
-        display: block; /* Show hamburger on mobile */
-        order: 0; /* Leftmost position */
+        display: block;
+        order: 0;
         font-size: 2em;
-        margin-right: 10px; /* Reduced space before logo */
+        margin-right: 10px;
         padding: 10px 15px;
         background-color: transparent;
         color: #333;
     }
     .hamburger.hidden {
-        display: none; /* Hide when sidebar is open */
+        display: none;
     }
     header img.logo {
-        order: 1; /* Move logo after hamburger */
-        margin-left: 0; /* Remove left margin to align with hamburger */
+        order: 1;
+        margin-left: 0;
     }
     .nav-links:not(.sidebar .nav-links) {
         display: none;
@@ -281,37 +286,37 @@ footer {
         align-items: center;
         margin: 0;
         position: absolute;
-        right: 20px; /* Лупа справа */
-        order: 999; /* Высокий порядок для правого расположения */
+        right: 20px;
+        order: 999;
     }
     .search-form input.desktop-only {
         display: none;
     }
     .search-form input.mobile-only {
         display: block;
-        width: 0; /* Initially hidden on mobile */
+        width: 0;
         opacity: 0;
-        transform: translateX(100%); /* Start off-screen to the right from lupa */
-        margin-left: 5px; /* Пространство слева от лупы */
+        transform: translateX(100%);
+        margin-left: 5px;
     }
     .search-form input.mobile-only.active {
-        width: 150px; /* Expanded width on mobile */
+        width: 150px;
         opacity: 1;
-        transform: translateX(0); /* Move to align with lupa from right */
+        transform: translateX(0);
     }
     .search-form button {
-        margin-left: 0; /* No margin to keep flush with edge */
-        order: 1; /* Лупа справа от строки */
+        margin-left: 0;
+        order: 1;
     }
     .language-switcher {
-        order: 2; /* After search */
+        order: 2;
         margin: 0 5px;
     }
     .sidebar {
         display: flex;
         position: fixed;
         top: 0;
-        left: -250px; /* Slide from left */
+        left: -250px;
         width: 250px;
         height: 100%;
         background-color: #ffffff;
@@ -319,13 +324,13 @@ footer {
         justify-content: flex-start;
         padding: 20px;
         z-index: 1001;
-        transition: left 0.3s ease; /* Slide from left */
-        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Shadow on right */
+        transition: left 0.3s ease;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
         box-sizing: border-box;
         overflow-x: hidden;
     }
     .sidebar.open {
-        left: 0; /* Slide in from left */
+        left: 0;
     }
     .sidebar .close-btn {
         display: block;
@@ -355,4 +360,24 @@ footer {
     .container {
         padding-top: 60px;
     }
+    .search-results {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        margin: 0;
+        padding: 10px;
+        border: 1px solid #c8e6c9;
+        border-radius: 5px;
+        background-color: #f1f8f1;
+        z-index: 900;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+    }
+    .search-results.active {
+        transform: translateY(0);
+    }
+}
+html {
+    scroll-behavior: smooth; /* Глобальная настройка плавной прокрутки */
 }

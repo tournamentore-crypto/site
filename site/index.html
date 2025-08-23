@@ -18,13 +18,34 @@
         <div class="language-switcher" onclick="toggleLanguage()">RU/EN</div>
         <button class="hamburger">☰</button>
         <nav class="nav-links">
-            <a href="index.html" class="active">Главная</a>
-            <a href="products.html">Продукция</a>
-            <a href="about.html">О нас</a>
-            <a href="contacts.html">Контакты</a>
-            <a href="#order-form">Заказ</a> 
-            <a href="suppliers.html">Поставщикам</a>
-            <a href="vacancies.html">Вакансии</a>
+            <a href="index.html" class="active">
+                <span class="ru">Главная</span>
+                <span class="en">Home</span>
+            </a>
+            <a href="products.html">
+                <span class="ru">Продукция</span>
+                <span class="en">Products</span>
+            </a>
+            <a href="about.html">
+                <span class="ru">О нас</span>
+                <span class="en">About</span>
+            </a>
+            <a href="contacts.html">
+                <span class="ru">Контакты</span>
+                <span class="en">Contacts</span>
+            </a>
+            <a href="#order-form">
+                <span class="ru">Заказ</span>
+                <span class="en">Order</span>
+            </a> 
+            <a href="suppliers.html">
+                <span class="ru">Поставщикам</span>
+                <span class="en">For Suppliers</span>
+            </a>
+            <a href="vacancies.html">
+                <span class="ru">Вакансии</span>
+                <span class="en">Vacancies</span>
+            </a>
         </nav>
         <div class="contact-info">
             <span class="ru">+7 (4812) 33-98-97</span>
@@ -36,13 +57,34 @@
         <nav class="sidebar">
             <button class="close-btn">✕</button>
             <div class="nav-links">
-                <a href="index.html" class="active">Главная</a>
-                <a href="products.html">Продукция</a>
-                <a href="about.html">О нас</a>
-                <a href="contacts.html">Контакты</a>
-                <a href="#order-form">Заказ</a> 
-                <a href="suppliers.html">Поставщикам</a>
-                <a href="vacancies.html">Вакансии</a>
+                <a href="index.html" class="active">
+                    <span class="ru">Главная</span>
+                    <span class="en">Home</span>
+                </a>
+                <a href="products.html">
+                    <span class="ru">Продукция</span>
+                    <span class="en">Products</span>
+                </a>
+                <a href="about.html">
+                    <span class="ru">О нас</span>
+                    <span class="en">About</span>
+                </a>
+                <a href="contacts.html">
+                    <span class="ru">Контакты</span>
+                    <span class="en">Contacts</span>
+                </a>
+                <a href="#order-form">
+                    <span class="ru">Заказ</span>
+                    <span class="en">Order</span>
+                </a> 
+                <a href="suppliers.html">
+                    <span class="ru">Поставщикам</span>
+                    <span class="en">For Suppliers</span>
+                </a>
+                <a href="vacancies.html">
+                    <span class="ru">Вакансии</span>
+                    <span class="en">Vacancies</span>
+                </a>
             </div>
         </nav>
     </header>
@@ -77,10 +119,10 @@
         <form id="order-form" class="order-form">
             <h3 class="ru">Оформить заказ</h3>
             <h3 class="en">Place an Order</h3>
-            <input type="text" name="name" placeholder="Ваше имя" required>
-            <input type="email" name="email" placeholder="Ваш email" required>
-            <input type="tel" name="phone" placeholder="Ваш телефон" required>
-            <textarea name="message" placeholder="Ваше сообщение" required></textarea>
+            <input type="text" name="name" placeholder="Ваше имя" autocomplete="name" required>
+            <input type="email" name="email" placeholder="Ваш email" autocomplete="email" required>
+            <input type="tel" name="phone" placeholder="Ваш телефон" autocomplete="tel" required>
+            <textarea name="message" placeholder="Ваше сообщение" autocomplete="off" required></textarea>
             <button type="submit" class="ru">Отправить</button>
             <button type="submit" class="en">Submit</button>
         </form>

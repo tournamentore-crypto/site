@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>Продукция</title>
+    <title>О нас</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -18,13 +18,34 @@
         <div class="language-switcher" onclick="toggleLanguage()">RU/EN</div>
         <button class="hamburger">☰</button>
         <nav class="nav-links">
-            <a href="index.html">Главная</a>
-            <a href="products.html" class="active">Продукция</a>
-            <a href="about.html">О нас</a>
-            <a href="contacts.html">Контакты</a>
-            <a href="#order-form">Заказ</a> 
-            <a href="suppliers.html">Поставщикам</a>
-            <a href="vacancies.html">Вакансии</a>
+            <a href="index.html">
+                <span class="ru">Главная</span>
+                <span class="en">Home</span>
+            </a>
+            <a href="products.html">
+                <span class="ru">Продукция</span>
+                <span class="en">Products</span>
+            </a>
+            <a href="about.html" class="active">
+                <span class="ru">О нас</span>
+                <span class="en">About</span>
+            </a>
+            <a href="contacts.html">
+                <span class="ru">Контакты</span>
+                <span class="en">Contacts</span>
+            </a>
+            <a href="#order-form">
+                <span class="ru">Заказ</span>
+                <span class="en">Order</span>
+            </a> 
+            <a href="suppliers.html">
+                <span class="ru">Поставщикам</span>
+                <span class="en">For Suppliers</span>
+            </a>
+            <a href="vacancies.html">
+                <span class="ru">Вакансии</span>
+                <span class="en">Vacancies</span>
+            </a>
         </nav>
         <div class="contact-info">
             <span class="ru">+7 (4812) 33-98-97</span>
@@ -36,57 +57,52 @@
         <nav class="sidebar">
             <button class="close-btn">✕</button>
             <div class="nav-links">
-                <a href="index.html">Главная</a>
-                <a href="products.html" class="active">Продукция</a>
-                <a href="about.html">О нас</a>
-                <a href="contacts.html">Контакты</a>
-                <a href="#order-form">Заказ</a> 
-                <a href="suppliers.html">Поставщикам</a>
-                <a href="vacancies.html">Вакансии</a>
+                <a href="index.html">
+                    <span class="ru">Главная</span>
+                    <span class="en">Home</span>
+                </a>
+                <a href="products.html">
+                    <span class="ru">Продукция</span>
+                    <span class="en">Products</span>
+                </a>
+                <a href="about.html" class="active">
+                    <span class="ru">О нас</span>
+                    <span class="en">About</span>
+                </a>
+                <a href="contacts.html">
+                    <span class="ru">Контакты</span>
+                    <span class="en">Contacts</span>
+                </a>
+                <a href="#order-form">
+                    <span class="ru">Заказ</span>
+                    <span class="en">Order</span>
+                </a> 
+                <a href="suppliers.html">
+                    <span class="ru">Поставщикам</span>
+                    <span class="en">For Suppliers</span>
+                </a>
+                <a href="vacancies.html">
+                    <span class="ru">Вакансии</span>
+                    <span class="en">Vacancies</span>
+                </a>
             </div>
         </nav>
     </header>
     <div class="search-results" id="search-results" style="display: none;"></div>
     <div class="container">
-        <h2 class="ru">Наша продукция</h2>
-        <h2 class="en">Our Products</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th class="ru">Продукт</th>
-                    <th class="en">Product</th>
-                    <th class="ru">Описание</th>
-                    <th class="en">Description</th>
-                    <th class="ru">Цена</th>
-                    <th class="en">Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="ru">Документ А</td>
-                    <td class="en">Document A</td>
-                    <td class="ru">Высококачественный документ с защитой.</td>
-                    <td class="en">High-quality document with protection.</td>
-                    <td>5000 руб.</td>
-                </tr>
-                <tr>
-                    <td class="ru">Документ Б</td>
-                    <td class="en">Document B</td>
-                    <td class="ru">Экономичный вариант для массового использования.</td>
-                    <td class="en">Cost-effective option for mass use.</td>
-                    <td>3000 руб.</td>
-                </tr>
-            </tbody>
-        </table>
+        <h2 class="ru">О нас</h2>
+        <h2 class="en">About Us</h2>
+        <p class="ru">Компания СмолДок занимается производством и продажей высококачественных документов с 2010 года. Наша миссия — предоставлять надежные и доступные решения для наших клиентов.</p>
+        <p class="en">SmolDok has been engaged in the production and sale of high-quality documents since 2010. Our mission is to provide reliable and affordable solutions for our clients.</p>
     </div>
     <footer>
         <form id="order-form" class="order-form">
             <h3 class="ru">Оформить заказ</h3>
             <h3 class="en">Place an Order</h3>
-            <input type="text" name="name" placeholder="Ваше имя" required>
-            <input type="email" name="email" placeholder="Ваш email" required>
-            <input type="tel" name="phone" placeholder="Ваш телефон" required>
-            <textarea name="message" placeholder="Ваше сообщение" required></textarea>
+            <input type="text" name="name" placeholder="Ваше имя" autocomplete="name" required>
+            <input type="email" name="email" placeholder="Ваш email" autocomplete="email" required>
+            <input type="tel" name="phone" placeholder="Ваш телефон" autocomplete="tel" required>
+            <textarea name="message" placeholder="Ваше сообщение" autocomplete="off" required></textarea>
             <button type="submit" class="ru">Отправить</button>
             <button type="submit" class="en">Submit</button>
         </form>

@@ -9,21 +9,22 @@ function toggleLanguage() {
 }
 
 function toggleSearch(event) {
-    event.preventDefault(); // Предотвращаем возможные конфликты
-    const searchInputs = document.querySelectorAll('.search-form input'); // Поддержка desktop и mobile
+    event.preventDefault();
+    const searchInputs = document.querySelectorAll('.search-form input');
     const searchButton = document.querySelector('.search-form button');
-    console.log('Toggling search - Inputs:', searchInputs, 'Button:', searchButton, 'Event:', event); // Диагностика
+    console.log('Toggling search - Inputs:', searchInputs, 'Button:', searchButton, 'Event:', event);
     if (searchInputs.length > 0 && searchButton) {
         searchInputs.forEach(input => {
             input.classList.toggle('active');
             if (input.classList.contains('active')) {
-                input.focus(); // Устанавливаем фокус на поле ввода
+                input.focus();
                 console.log('Input focused, value:', input.value, 'Input:', input);
             } else {
                 input.value = '';
                 const resultsDiv = document.getElementById('search-results');
                 if (resultsDiv) {
                     resultsDiv.style.display = 'none';
+                    resultsDiv.classList.remove('active');
                 }
                 console.log('Input cleared');
             }
@@ -34,15 +35,16 @@ function toggleSearch(event) {
 }
 
 function performSearch() {
-    const searchInput = document.querySelector('.search-form input.active'); // Берем активное поле
+    const searchInput = document.querySelector('.search-form input.active');
     if (searchInput) {
         const query = searchInput.value.toLowerCase();
         const resultsDiv = document.getElementById('search-results');
-        console.log('Performing search with query:', query); // Диагностика
+        console.log('Performing search with query:', query);
         if (resultsDiv) {
             resultsDiv.innerHTML = '';
             if (!query) {
                 resultsDiv.style.display = 'none';
+                resultsDiv.classList.remove('active');
                 return;
             }
             const container = document.querySelector('.container');
@@ -64,6 +66,7 @@ function performSearch() {
             if (results.length > 0) {
                 results.forEach(result => resultsDiv.appendChild(result));
                 resultsDiv.style.display = 'block';
+                resultsDiv.classList.add('active');
             } else {
                 resultsDiv.innerHTML = `<div class="result">${
                     document.documentElement.getAttribute('data-lang') === 'ru'
@@ -71,6 +74,7 @@ function performSearch() {
                         : 'No results found'
                 }</div>`;
                 resultsDiv.style.display = 'block';
+                resultsDiv.classList.add('active');
             }
         } else {
             console.error('Search results div not found');
@@ -93,9 +97,9 @@ function toggleSidebar() {
     if (sidebar) {
         sidebar.classList.toggle('open');
         if (sidebar.classList.contains('open')) {
-            if (hamburger) hamburger.classList.add('hidden'); // Hide hamburger
+            if (hamburger) hamburger.classList.add('hidden');
         } else {
-            if (hamburger) hamburger.classList.remove('hidden'); // Show hamburger
+            if (hamburger) hamburger.classList.remove('hidden');
         }
     } else {
         console.error('Sidebar not found');
@@ -107,18 +111,7 @@ function closeSidebar(event) {
     const hamburger = document.querySelector('.hamburger');
     if (sidebar && hamburger && !sidebar.contains(event.target) && !hamburger.contains(event.target)) {
         sidebar.classList.remove('open');
-        hamburger.classList.remove('hidden'); // Ensure hamburger is visible
-    }
-}
-
-function scrollToOrder(event) {
-    event.preventDefault();
-    const orderForm = document.getElementById('order-form');
-    if (orderForm) {
-        orderForm.scrollIntoView({ behavior: 'smooth' });
-        console.log('Scrolling to order form');
-    } else {
-        console.error('Order form not found');
+        hamburger.classList.remove('hidden');
     }
 }
 
@@ -130,20 +123,35 @@ function handleScroll() {
     }
 
     const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const delta = 10; /* Reduced for sensitivity */
+    const delta = 10;
     const isScrolled = header.classList.contains('scrolled');
 
     if (Math.abs(currentScrollTop - lastScrollTop) <= delta) return;
 
-    if (currentScrollTop > 80 && !isScrolled) {
+    if (currentScrollTop > 20 && !isScrolled) {
         header.classList.add('scrolled');
         console.log('Added scrolled class:', currentScrollTop);
-    } else if (currentScrollTop <= 80 && isScrolled) {
+    } else if (currentScrollTop <= 20 && isScrolled) {
         header.classList.remove('scrolled');
         console.log('Removed scrolled class:', currentScrollTop);
     }
 
     lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+}
+
+function handleNavigation(event) {
+    const link = event.target.closest('a');
+    if (link) {
+        const href = link.getAttribute('href');
+        console.log('Navigating to:', href, 'Event target:', event.target, 'Current URL:', window.location.href, 'Base URL:', window.location.pathname);
+        if (href === '#order-form') {
+            event.preventDefault();
+            const orderForm = document.querySelector('#order-form');
+            if (orderForm) {
+                orderForm.scrollIntoView({ behavior: 'smooth' }); // Плавная прокрутка к форме
+            }
+        }
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -155,16 +163,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (searchInputs.length > 0 && searchButton) {
         searchButton.addEventListener('click', toggleSearch);
         searchInputs.forEach(input => {
-            input.addEventListener('input', performSearch); // Привязка события input для всех полей
+            input.addEventListener('input', performSearch);
+            input.addEventListener('change', performSearch);
+            input.addEventListener('touchend', performSearch);
         });
-        // Особая обработка для мобильного input
-        const mobileInput = document.getElementById('mobile-search-input');
-        if (mobileInput) {
-            mobileInput.addEventListener('input', performSearch); // Убедимся, что мобильный поиск работает
-            mobileInput.addEventListener('touchend', performSearch); // Дополнительное событие для сенсорных устройств
-            console.log('Mobile search input initialized:', mobileInput);
-        }
-        console.log('Search initialized - Inputs:', searchInputs, 'Button:', searchButton); // Диагностика
+        console.log('Search initialized - Inputs:', searchInputs, 'Button:', searchButton);
     } else {
         console.error('Search input or button not found. Ensure .search-form contains at least one <input> and <button>.');
     }
@@ -184,16 +187,15 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Hamburger or close button not found');
     }
 
-    // Обработчик для прокрутки к форме заказа
-    const orderLinks = document.querySelectorAll('a[href="#order-form"]');
-    orderLinks.forEach(link => {
-        link.addEventListener('click', scrollToOrder);
+    // Обработчик навигации
+    const navLinks = document.querySelectorAll('.nav-links a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', handleNavigation);
     });
 
     // Initial scroll check
     handleScroll();
 
-    // Scroll event with requestAnimationFrame
     let ticking = false;
     const scrollHandler = () => {
         if (!ticking) {
