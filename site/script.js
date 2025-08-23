@@ -10,36 +10,34 @@ function toggleLanguage() {
 
 function toggleSearch(event) {
     event.preventDefault();
-    const searchInputs = document.querySelectorAll('.search-form input');
+    const searchInput = document.querySelector('.search-form input.desktop-only');
     const searchButton = document.querySelector('.search-form button');
-    console.log('Toggling search - Inputs:', searchInputs, 'Button:', searchButton, 'Event:', event);
-    if (searchInputs.length > 0 && searchButton) {
-        searchInputs.forEach(input => {
-            input.classList.toggle('active');
-            if (input.classList.contains('active')) {
-                input.focus();
-                console.log('Input focused, value:', input.value, 'Input:', input);
-            } else {
-                input.value = '';
-                const resultsDiv = document.getElementById('search-results');
-                if (resultsDiv) {
-                    resultsDiv.style.display = 'none';
-                    resultsDiv.classList.remove('active');
-                }
-                console.log('Input cleared');
+    console.log('Toggling search - Input:', searchInput, 'Button:', searchButton, 'Event:', event);
+    if (searchInput && searchButton) {
+        searchInput.classList.toggle('active');
+        if (searchInput.classList.contains('active')) {
+            searchInput.focus();
+            console.log('Input focused, value:', searchInput.value, 'Input:', searchInput);
+        } else {
+            searchInput.value = '';
+            const resultsDiv = document.getElementById('search-results');
+            if (resultsDiv) {
+                resultsDiv.style.display = 'none';
+                resultsDiv.classList.remove('active');
             }
-        });
+            console.log('Input cleared');
+        }
     } else {
-        console.error('Search input or button not found. Ensure .search-form contains at least one <input> and <button>.');
+        console.error('Search input or button not found. Ensure .search-form contains at least one <input.desktop-only> and <button>.');
     }
 }
 
-function performSearch() {
-    const searchInput = document.querySelector('.search-form input.active');
+async function performSearch() {
+    const searchInput = document.querySelector('.search-form input.desktop-only');
     if (searchInput) {
         const query = searchInput.value.toLowerCase().trim();
         const resultsDiv = document.getElementById('search-results');
-        console.log('Performing search - Query:', query, 'Input:', searchInput, 'ResultsDiv:', resultsDiv, 'Container:', document.querySelector('.container'));
+        console.log('Performing search - Query:', query, 'Input:', searchInput, 'ResultsDiv:', resultsDiv);
         if (resultsDiv) {
             resultsDiv.innerHTML = '';
             if (!query) {
@@ -48,39 +46,56 @@ function performSearch() {
                 console.log('No query, hiding results');
                 return;
             }
-            const container = document.querySelector('.container');
-            if (container) {
-                const texts = container.querySelectorAll('p, li, h2, h3, td');
-                console.log('Found texts:', texts.length);
-                let results = [];
-                texts.forEach(text => {
-                    const content = text.textContent.toLowerCase();
-                    console.log('Checking text:', content);
-                    if (content.includes(query)) {
-                        const resultText = text.textContent.split(/\s+/).slice(0, 2).join(' ');
-                        const result = document.createElement('div');
-                        result.className = 'result';
-                        result.textContent = resultText;
-                        results.push(result);
-                        console.log('Match found:', resultText);
+
+            const pages = [
+                'index.html',
+                'about.html',
+                'products.html',
+                'contacts.html',
+                'suppliers.html',
+                'vacancies.html'
+            ];
+
+            let allResults = [];
+            for (const page of pages) {
+                try {
+                    const response = await fetch(page);
+                    if (response.ok) {
+                        const text = await response.text();
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(text, 'text/html');
+                        const texts = doc.querySelectorAll('.container p, .container li, .container h2, .container h3, .container td');
+                        texts.forEach(text => {
+                            const content = text.textContent.toLowerCase();
+                            if (content.includes(query)) {
+                                const result = document.createElement('div');
+                                result.className = 'result';
+                                result.textContent = text.textContent;
+                                result.dataset.page = page;
+                                result.dataset.target = text.id || text.className;
+                                result.addEventListener('click', () => scrollToElement(text, page));
+                                allResults.push(result);
+                                console.log(`Match found in ${page}:`, text.textContent);
+                            }
+                        });
+                    } else {
+                        console.error(`Failed to fetch ${page}:`, response.status);
                     }
-                });
-                if (results.length > 0) {
-                    results.forEach(result => resultsDiv.appendChild(result));
-                    resultsDiv.style.display = 'block';
-                    resultsDiv.classList.add('active');
-                    console.log('Results displayed:', results.length);
-                } else {
-                    resultsDiv.innerHTML = `<div class="result">${document.documentElement.getAttribute('data-lang') === 'ru' ? 'Ничего не найдено' : 'No results found'}</div>`;
-                    resultsDiv.style.display = 'block';
-                    resultsDiv.classList.add('active');
-                    console.log('No matches, showing no results message');
+                } catch (error) {
+                    console.error(`Error fetching ${page}:`, error);
                 }
-            } else {
-                console.error('Container not found for search');
-                resultsDiv.innerHTML = `<div class="result">Error: Container not found</div>`;
+            }
+
+            if (allResults.length > 0) {
+                allResults.forEach(result => resultsDiv.appendChild(result));
                 resultsDiv.style.display = 'block';
                 resultsDiv.classList.add('active');
+                console.log('Results displayed:', allResults.length);
+            } else {
+                resultsDiv.innerHTML = `<div class="result">${document.documentElement.getAttribute('data-lang') === 'ru' ? 'Ничего не найдено' : 'No results found'}</div>`;
+                resultsDiv.style.display = 'block';
+                resultsDiv.classList.add('active');
+                console.log('No matches, showing no results message');
             }
         } else {
             console.error('Search results div not found');
@@ -167,19 +182,38 @@ function handleNavigation(event) {
 }
 
 function closeSearchOnOutsideClick(event) {
-    const searchInputs = document.querySelectorAll('.search-form input');
+    const searchInput = document.querySelector('.search-form input.desktop-only');
     const searchButton = document.querySelector('.search-form button');
-    const isClickInside = searchInputs[0].contains(event.target) || searchButton.contains(event.target);
-    if (!isClickInside && searchInputs[0].classList.contains('active')) {
-        searchInputs.forEach(input => {
-            input.classList.remove('active');
-            input.value = '';
-            const resultsDiv = document.getElementById('search-results');
-            if (resultsDiv) {
-                resultsDiv.style.display = 'none';
-                resultsDiv.classList.remove('active');
-            }
-        });
+    const isClickInside = searchInput.contains(event.target) || searchButton.contains(event.target);
+    if (!isClickInside && searchInput.classList.contains('active')) {
+        searchInput.classList.remove('active');
+        searchInput.value = '';
+        const resultsDiv = document.getElementById('search-results');
+        if (resultsDiv) {
+            resultsDiv.style.display = 'none';
+            resultsDiv.classList.remove('active');
+        }
+    }
+}
+
+async function scrollToElement(element, page) {
+    if (page && page !== window.location.pathname) {
+        window.location.href = page;
+        // Сокращаем задержку до 300 мс для более быстрого перехода
+        await new Promise(resolve => setTimeout(resolve, 300));
+    }
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    const searchInput = document.querySelector('.search-form input.desktop-only');
+    if (searchInput) {
+        searchInput.classList.remove('active');
+        searchInput.value = '';
+        const resultsDiv = document.getElementById('search-results');
+        if (resultsDiv) {
+            resultsDiv.style.display = 'none';
+            resultsDiv.classList.remove('active');
+        }
     }
 }
 
@@ -187,19 +221,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('language') || 'ru';
     document.documentElement.setAttribute('data-lang', savedLang);
 
-    const searchInputs = document.querySelectorAll('.search-form input');
+    const searchInput = document.querySelector('.search-form input.desktop-only');
     const searchButton = document.querySelector('.search-form button');
-    if (searchInputs.length > 0 && searchButton) {
+    if (searchInput && searchButton) {
         searchButton.addEventListener('click', toggleSearch);
-        searchInputs.forEach(input => {
-            input.addEventListener('input', performSearch);
-            input.addEventListener('change', performSearch);
-            input.addEventListener('touchend', performSearch);
-            input.addEventListener('keyup', performSearch);
-        });
-        console.log('Search initialized - Inputs:', searchInputs, 'Button:', searchButton);
+        searchInput.addEventListener('input', performSearch);
+        searchInput.addEventListener('change', performSearch);
+        searchInput.addEventListener('keyup', performSearch);
+        console.log('Search initialized - Input:', searchInput, 'Button:', searchButton);
     } else {
-        console.error('Search input or button not found. Ensure .search-form contains at least one <input> and <button>.');
+        console.error('Search input or button not found. Ensure .search-form contains at least one <input.desktop-only> and <button>.');
     }
 
     const orderForms = document.querySelectorAll('#order-form');
