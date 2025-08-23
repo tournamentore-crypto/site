@@ -149,6 +149,12 @@ function handleNavigation(event) {
             const orderForm = document.querySelector('#order-form');
             if (orderForm) {
                 orderForm.scrollIntoView({ behavior: 'smooth' }); // Плавная прокрутка к форме
+                const sidebar = document.querySelector('.sidebar');
+                if (sidebar && sidebar.classList.contains('open')) {
+                    sidebar.classList.remove('open');
+                    const hamburger = document.querySelector('.hamburger');
+                    if (hamburger) hamburger.classList.remove('hidden');
+                }
             }
         }
     }

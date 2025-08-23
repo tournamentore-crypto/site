@@ -142,7 +142,7 @@ header img.logo {
     border-radius: 5px;
     background-color: #f1f8f1;
     position: fixed;
-    bottom: 0; /* Фиксируем внизу экрана */
+    bottom: 0; /* Фиксируем внизу экрана для десктопа */
     left: 0;
     width: 100%;
     z-index: 900; /* Ниже шапки (1000), но выше контента */
@@ -285,7 +285,7 @@ footer {
         display: flex;
         align-items: center;
         margin: 0;
-        position: absolute;
+        position: relative;
         right: 20px;
         order: 999;
     }
@@ -361,8 +361,8 @@ footer {
         padding-top: 60px;
     }
     .search-results {
-        position: fixed;
-        bottom: 0;
+        position: absolute;
+        top: 100%; /* Появление сразу под поисковой строкой */
         left: 0;
         width: 100%;
         margin: 0;
@@ -371,11 +371,13 @@ footer {
         border-radius: 5px;
         background-color: #f1f8f1;
         z-index: 900;
-        transform: translateY(100%);
-        transition: transform 0.3s ease;
+        transform: translateY(10px); /* Небольшой сдвиг для плавности */
+        opacity: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease; /* Анимация появления */
     }
     .search-results.active {
         transform: translateY(0);
+        opacity: 1; /* Появление с анимацией */
     }
 }
 html {
