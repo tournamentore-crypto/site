@@ -85,7 +85,7 @@ header img.logo {
     opacity: 0;
     transition: width 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
     margin-right: 5px;
-    transform: translateX(-100%); /* Анимация только для строки */
+    transform: translateX(-100%);
     box-sizing: border-box;
 }
 .search-form input.active {
@@ -112,8 +112,8 @@ header img.logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative; /* Статичная позиция */
-    z-index: 2; /* Над строкой */
+    position: relative;
+    z-index: 2;
 }
 .search-form button:hover {
     background-color: #388e3c;
@@ -299,14 +299,14 @@ footer {
         display: block;
         width: 0;
         opacity: 0;
-        transform: translateX(-100%); /* Анимация строки справа-налево */
+        transform: translateX(-100%);
         margin-right: 5px;
-        position: relative; /* Относительная позиция для анимации */
+        position: relative;
     }
     .search-form input.mobile-only.active {
         width: 150px;
         opacity: 1;
-        transform: translateX(0); /* Конечная позиция */
+        transform: translateX(0);
     }
     .search-form button {
         padding: 6px 10px;
@@ -321,7 +321,7 @@ footer {
         display: flex;
         align-items: center;
         justify-content: center;
-        position: static; /* Статичная лупа */
+        position: static;
         z-index: 2;
     }
     .language-switcher {
@@ -378,7 +378,7 @@ footer {
     }
     .search-results {
         position: absolute;
-        top: 100%; /* Just below search form */
+        top: 100%;
         left: 0;
         width: 100%;
         margin: 0;

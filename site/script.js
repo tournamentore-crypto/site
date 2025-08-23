@@ -39,7 +39,7 @@ function performSearch() {
     if (searchInput) {
         const query = searchInput.value.toLowerCase().trim();
         const resultsDiv = document.getElementById('search-results');
-        console.log('Performing search with query:', query, 'ResultsDiv:', resultsDiv, 'Input:', searchInput);
+        console.log('Performing search with query:', query, 'ResultsDiv:', resultsDiv, 'Input:', searchInput, 'Container:', document.querySelector('.container'));
         if (resultsDiv) {
             resultsDiv.innerHTML = '';
             if (!query) {
@@ -167,6 +167,23 @@ function handleNavigation(event) {
     }
 }
 
+function closeSearchOnOutsideClick(event) {
+    const searchInputs = document.querySelectorAll('.search-form input');
+    const searchButton = document.querySelector('.search-form button');
+    const isClickInside = searchInputs[0].contains(event.target) || searchButton.contains(event.target);
+    if (!isClickInside && searchInputs[0].classList.contains('active')) {
+        searchInputs.forEach(input => {
+            input.classList.remove('active');
+            input.value = '';
+            const resultsDiv = document.getElementById('search-results');
+            if (resultsDiv) {
+                resultsDiv.style.display = 'none';
+                resultsDiv.classList.remove('active');
+            }
+        });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('language') || 'ru';
     document.documentElement.setAttribute('data-lang', savedLang);
@@ -204,6 +221,8 @@ document.addEventListener('DOMContentLoaded', () => {
     navLinks.forEach(link => {
         link.addEventListener('click', handleNavigation);
     });
+
+    document.addEventListener('click', closeSearchOnOutsideClick); // Закрытие поиска при клике вне
 
     handleScroll();
 
