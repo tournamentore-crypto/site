@@ -39,20 +39,23 @@ function performSearch() {
     if (searchInput) {
         const query = searchInput.value.toLowerCase().trim();
         const resultsDiv = document.getElementById('search-results');
-        console.log('Performing search with query:', query, 'ResultsDiv:', resultsDiv, 'Input:', searchInput, 'Container:', document.querySelector('.container'));
+        console.log('Performing search - Query:', query, 'Input:', searchInput, 'ResultsDiv:', resultsDiv, 'Container:', document.querySelector('.container'));
         if (resultsDiv) {
             resultsDiv.innerHTML = '';
             if (!query) {
                 resultsDiv.style.display = 'none';
                 resultsDiv.classList.remove('active');
+                console.log('No query, hiding results');
                 return;
             }
             const container = document.querySelector('.container');
             if (container) {
                 const texts = container.querySelectorAll('p, li, h2, h3, td');
+                console.log('Found texts:', texts.length);
                 let results = [];
                 texts.forEach(text => {
                     const content = text.textContent.toLowerCase();
+                    console.log('Checking text:', content);
                     if (content.includes(query)) {
                         const result = document.createElement('div');
                         result.className = 'result';
@@ -62,12 +65,14 @@ function performSearch() {
                         );
                         result.innerHTML = highlightedText;
                         results.push(result);
+                        console.log('Match found:', highlightedText);
                     }
                 });
                 if (results.length > 0) {
                     results.forEach(result => resultsDiv.appendChild(result));
                     resultsDiv.style.display = 'block';
                     resultsDiv.classList.add('active');
+                    console.log('Results displayed:', results.length);
                 } else {
                     resultsDiv.innerHTML = `<div class="result">${
                         document.documentElement.getAttribute('data-lang') === 'ru'
@@ -76,6 +81,7 @@ function performSearch() {
                     }</div>`;
                     resultsDiv.style.display = 'block';
                     resultsDiv.classList.add('active');
+                    console.log('No matches, showing no results message');
                 }
             } else {
                 console.error('Container not found for search');
@@ -196,6 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
             input.addEventListener('input', performSearch);
             input.addEventListener('change', performSearch);
             input.addEventListener('touchend', performSearch);
+            input.addEventListener('keyup', performSearch); // Добавлено для мобильных устройств
         });
         console.log('Search initialized - Inputs:', searchInputs, 'Button:', searchButton);
     } else {
@@ -222,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', handleNavigation);
     });
 
-    document.addEventListener('click', closeSearchOnOutsideClick); // Закрытие поиска при клике вне
+    document.addEventListener('click', closeSearchOnOutsideClick);
 
     handleScroll();
 

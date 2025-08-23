@@ -142,17 +142,19 @@ header img.logo {
     border: 1px solid #c8e6c9;
     border-radius: 5px;
     background-color: #f1f8f1;
-    position: fixed;
-    bottom: 0;
+    position: absolute; /* Изменено с fixed для лучшей совместимости */
+    top: 100%;
     left: 0;
     width: 100%;
     z-index: 900;
     box-sizing: border-box;
-    transform: translateY(100%);
-    transition: transform 0.3s ease;
+    transform: translateY(10px);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 .search-results.active {
     transform: translateY(0);
+    opacity: 1;
 }
 .search-results .result {
     padding: 5px;
