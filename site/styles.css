@@ -4,28 +4,28 @@ body {
     padding: 0;
     line-height: 1.6;
     color: #333;
-    background-color: #f4f7f3;
+    background-color: #f4f7f3; /* Light green background */
 }
 header {
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 20px 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* White, slightly dimmer */
+    padding: 20px 20px; /* Increased for visibility */
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 2px solid #c8e6c9;
+    border-bottom: 2px solid #c8e6c9; /* Green border */
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100%; /* Ensure full width */
     z-index: 1000;
-    transition: padding 0.3s ease, background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    transition: padding 0.3s ease, background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Explicit transitions */
     box-sizing: border-box;
 }
 header.scrolled {
-    padding: 10px 20px;
-    background-color: #ffffff;
-    transform: translateY(-10px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    padding: 10px 20px; /* More noticeable reduction */
+    background-color: #ffffff; /* Solid white */
+    transform: translateY(-10px); /* Stronger shift */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Stronger shadow */
 }
 header img.logo {
     max-width: 120px;
@@ -34,23 +34,23 @@ header img.logo {
     margin-right: 15px;
     margin-left: 10px;
     flex-shrink: 0;
-    object-fit: contain;
+    object-fit: contain; /* Preserve image inside square */
 }
 .hamburger {
-    display: none;
-    font-size: 2em;
+    display: none; /* Hidden on desktop */
+    font-size: 2em; /* Larger for visibility */
     background: none;
     border: none;
     cursor: pointer;
     color: #333;
-    padding: 10px 15px;
-    z-index: 1002;
+    padding: 10px 15px; /* Larger tap area */
+    z-index: 1002; /* Above sidebar */
 }
 .hamburger.hidden {
-    display: none;
+    display: none; /* Hide when sidebar is open */
 }
 .sidebar {
-    display: none;
+    display: none; /* Hidden on desktop */
 }
 .nav-links {
     display: flex;
@@ -76,23 +76,22 @@ header img.logo {
     align-items: center;
     margin: 0 10px;
     position: relative;
-    flex-direction: row-reverse;
 }
 .search-form input {
     padding: 6px;
     border: 1px solid #c8e6c9;
     border-radius: 5px;
-    width: 0;
+    width: 0; /* Initially hidden */
     opacity: 0;
-    transition: width 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+    transition: width 0.3s ease, opacity 0.3s ease, transform 0.3s ease; /* Smooth transition with transform */
     margin-right: 5px;
-    transform: translateX(-100%);
-    box-sizing: border-box;
+    transform: translateX(-100%); /* Start off-screen to the left */
+    box-sizing: border-box; /* Учитывать padding в ширине */
 }
 .search-form input.active {
-    width: 150px;
+    width: 150px; /* Expanded width */
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(0); /* Move to align with button from right */
 }
 .search-form input.desktop-only {
     display: block;
@@ -137,21 +136,13 @@ header img.logo {
     display: none;
 }
 .search-results {
+    margin: 20px;
     padding: 10px;
     border: 1px solid #c8e6c9;
     border-radius: 5px;
     background-color: #f1f8f1;
-    position: fixed;
-    bottom: 0; /* Фиксируем внизу экрана для десктопа */
-    left: 0;
-    width: 100%;
-    z-index: 900; /* Ниже шапки (1000), но выше контента */
-    box-sizing: border-box;
-    transform: translateY(100%); /* Скрываем по умолчанию */
-    transition: transform 0.3s ease; /* Анимация появления */
-}
-.search-results.active {
-    transform: translateY(0); /* Появление снизу */
+    position: relative;
+    z-index: 999;
 }
 .search-results .result {
     padding: 5px;
@@ -164,7 +155,7 @@ header img.logo {
     max-width: 1200px;
     margin: 20px auto;
     padding: 0 20px;
-    padding-top: 80px; /* Учитываем высоту шапки */
+    padding-top: 80px;
 }
 h2 {
     color: #2e7d32;
@@ -285,7 +276,7 @@ footer {
         display: flex;
         align-items: center;
         margin: 0;
-        position: relative;
+        position: absolute;
         right: 20px;
         order: 999;
     }
@@ -361,7 +352,7 @@ footer {
         padding-top: 60px;
     }
     .search-results {
-        position: absolute;
+        position: fixed;
         top: 100%; /* Появление сразу под поисковой строкой */
         left: 0;
         width: 100%;
@@ -371,15 +362,12 @@ footer {
         border-radius: 5px;
         background-color: #f1f8f1;
         z-index: 900;
-        transform: translateY(10px); /* Небольшой сдвиг для плавности */
+        transform: translateY(10px);
         opacity: 0;
-        transition: transform 0.3s ease, opacity 0.3s ease; /* Анимация появления */
+        transition: transform 0.3s ease, opacity 0.3s ease;
     }
     .search-results.active {
         transform: translateY(0);
-        opacity: 1; /* Появление с анимацией */
+        opacity: 1;
     }
-}
-html {
-    scroll-behavior: smooth; /* Глобальная настройка плавной прокрутки */
 }
