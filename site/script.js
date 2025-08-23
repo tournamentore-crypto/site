@@ -39,7 +39,7 @@ function performSearch() {
     if (searchInput) {
         const query = searchInput.value.toLowerCase();
         const resultsDiv = document.getElementById('search-results');
-        console.log('Performing search with query:', query);
+        console.log('Performing search with query:', query, 'ResultsDiv:', resultsDiv);
         if (resultsDiv) {
             resultsDiv.innerHTML = '';
             if (!query) {
@@ -48,33 +48,37 @@ function performSearch() {
                 return;
             }
             const container = document.querySelector('.container');
-            const texts = container.querySelectorAll('p, li, h2, h3, td');
-            let results = [];
-            texts.forEach(text => {
-                const content = text.textContent.toLowerCase();
-                if (content.includes(query)) {
-                    const result = document.createElement('div');
-                    result.className = 'result';
-                    const highlightedText = text.innerHTML.replace(
-                        new RegExp(query, 'gi'),
-                        match => `<span class="highlight">${match}</span>`
-                    );
-                    result.innerHTML = highlightedText;
-                    results.push(result);
+            if (container) {
+                const texts = container.querySelectorAll('p, li, h2, h3, td');
+                let results = [];
+                texts.forEach(text => {
+                    const content = text.textContent.toLowerCase();
+                    if (content.includes(query)) {
+                        const result = document.createElement('div');
+                        result.className = 'result';
+                        const highlightedText = text.innerHTML.replace(
+                            new RegExp(query, 'gi'),
+                            match => `<span class="highlight">${match}</span>`
+                        );
+                        result.innerHTML = highlightedText;
+                        results.push(result);
+                    }
+                });
+                if (results.length > 0) {
+                    results.forEach(result => resultsDiv.appendChild(result));
+                    resultsDiv.style.display = 'block';
+                    resultsDiv.classList.add('active');
+                } else {
+                    resultsDiv.innerHTML = `<div class="result">${
+                        document.documentElement.getAttribute('data-lang') === 'ru'
+                            ? 'Ничего не найдено'
+                            : 'No results found'
+                    }</div>`;
+                    resultsDiv.style.display = 'block';
+                    resultsDiv.classList.add('active');
                 }
-            });
-            if (results.length > 0) {
-                results.forEach(result => resultsDiv.appendChild(result));
-                resultsDiv.style.display = 'block';
-                resultsDiv.classList.add('active');
             } else {
-                resultsDiv.innerHTML = `<div class="result">${
-                    document.documentElement.getAttribute('data-lang') === 'ru'
-                        ? 'Ничего не найдено'
-                        : 'No results found'
-                }</div>`;
-                resultsDiv.style.display = 'block';
-                resultsDiv.classList.add('active');
+                console.error('Container not found for search');
             }
         } else {
             console.error('Search results div not found');
@@ -169,9 +173,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (searchInputs.length > 0 && searchButton) {
         searchButton.addEventListener('click', toggleSearch);
         searchInputs.forEach(input => {
-            input.addEventListener('input', performSearch);
-            input.addEventListener('change', performSearch);
-            input.addEventListener('touchend', performSearch);
+            input.addEventListener('input', performSearch); // Trigger search on input
+            input.addEventListener('change', performSearch); // Trigger on change
+            input.addEventListener('touchend', performSearch); // Trigger on touch
         });
         console.log('Search initialized - Inputs:', searchInputs, 'Button:', searchButton);
     } else {
