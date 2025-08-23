@@ -111,6 +111,17 @@ function closeSidebar(event) {
     }
 }
 
+function scrollToOrder(event) {
+    event.preventDefault();
+    const orderForm = document.getElementById('order-form');
+    if (orderForm) {
+        orderForm.scrollIntoView({ behavior: 'smooth' });
+        console.log('Scrolling to order form');
+    } else {
+        console.error('Order form not found');
+    }
+}
+
 function handleScroll() {
     const header = document.querySelector('header');
     if (!header) {
@@ -144,8 +155,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (searchInputs.length > 0 && searchButton) {
         searchButton.addEventListener('click', toggleSearch);
         searchInputs.forEach(input => {
-            input.addEventListener('input', performSearch);
+            input.addEventListener('input', performSearch); // Привязка события input для всех полей
         });
+        // Особая обработка для мобильного input
+        const mobileInput = document.getElementById('mobile-search-input');
+        if (mobileInput) {
+            mobileInput.addEventListener('input', performSearch); // Убедимся, что мобильный поиск работает
+            mobileInput.addEventListener('touchend', performSearch); // Дополнительное событие для сенсорных устройств
+            console.log('Mobile search input initialized:', mobileInput);
+        }
         console.log('Search initialized - Inputs:', searchInputs, 'Button:', searchButton); // Диагностика
     } else {
         console.error('Search input or button not found. Ensure .search-form contains at least one <input> and <button>.');
@@ -165,6 +183,12 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.error('Hamburger or close button not found');
     }
+
+    // Обработчик для прокрутки к форме заказа
+    const orderLinks = document.querySelectorAll('a[href="#order-form"]');
+    orderLinks.forEach(link => {
+        link.addEventListener('click', scrollToOrder);
+    });
 
     // Initial scroll check
     handleScroll();
