@@ -57,15 +57,12 @@ function performSearch() {
                     const content = text.textContent.toLowerCase();
                     console.log('Checking text:', content);
                     if (content.includes(query)) {
+                        const resultText = text.textContent.split(/\s+/).slice(0, 2).join(' ');
                         const result = document.createElement('div');
                         result.className = 'result';
-                        const highlightedText = text.innerHTML.replace(
-                            new RegExp(`(${query})`, 'gi'),
-                            match => `<span class="highlight">${match}</span>`
-                        );
-                        result.innerHTML = highlightedText;
+                        result.textContent = resultText;
                         results.push(result);
-                        console.log('Match found:', highlightedText);
+                        console.log('Match found:', resultText);
                     }
                 });
                 if (results.length > 0) {
@@ -74,11 +71,7 @@ function performSearch() {
                     resultsDiv.classList.add('active');
                     console.log('Results displayed:', results.length);
                 } else {
-                    resultsDiv.innerHTML = `<div class="result">${
-                        document.documentElement.getAttribute('data-lang') === 'ru'
-                            ? 'Ничего не найдено'
-                            : 'No results found'
-                    }</div>`;
+                    resultsDiv.innerHTML = `<div class="result">${document.documentElement.getAttribute('data-lang') === 'ru' ? 'Ничего не найдено' : 'No results found'}</div>`;
                     resultsDiv.style.display = 'block';
                     resultsDiv.classList.add('active');
                     console.log('No matches, showing no results message');
@@ -202,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
             input.addEventListener('input', performSearch);
             input.addEventListener('change', performSearch);
             input.addEventListener('touchend', performSearch);
-            input.addEventListener('keyup', performSearch); // Добавлено для мобильных устройств
+            input.addEventListener('keyup', performSearch);
         });
         console.log('Search initialized - Inputs:', searchInputs, 'Button:', searchButton);
     } else {

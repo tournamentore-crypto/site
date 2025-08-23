@@ -142,10 +142,11 @@ header img.logo {
     border: 1px solid #c8e6c9;
     border-radius: 5px;
     background-color: #f1f8f1;
-    position: absolute; /* Изменено с fixed для лучшей совместимости */
+    position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
+    max-width: 300px;
     z-index: 900;
     box-sizing: border-box;
     transform: translateY(10px);
@@ -159,9 +160,10 @@ header img.logo {
 .search-results .result {
     padding: 5px;
     margin: 5px 0;
-}
-.search-results .highlight {
-    background-color: #c8e6c9;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .container {
     max-width: 1200px;
@@ -383,15 +385,16 @@ footer {
         top: 100%;
         left: 0;
         width: 100%;
+        max-width: 300px;
         margin: 0;
-        padding: 10px;
+        padding: 5px;
         border: 1px solid #c8e6c9;
         border-radius: 5px;
         background-color: #f1f8f1;
         z-index: 900;
-        transform: translateY(10px);
+        transform: translateY(5px);
         opacity: 0;
-        transition: transform 0.3s ease, opacity 0.3s ease;
+        transition: transform 0.2s ease, opacity 0.2s ease;
     }
     .search-results.active {
         transform: translateY(0);
