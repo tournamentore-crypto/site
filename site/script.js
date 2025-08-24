@@ -1,13 +1,5 @@
 let lastScrollTop = 0;
 
-function toggleLanguage() {
-    const currentLang = document.documentElement.getAttribute('data-lang');
-    const newLang = currentLang === 'ru' ? 'en' : 'ru';
-    document.documentElement.setAttribute('data-lang', newLang);
-    localStorage.setItem('language', newLang);
-    performSearch();
-}
-
 function toggleSearch(event) {
     event.preventDefault();
     const searchInput = document.querySelector('.search-form input.desktop-only');
@@ -73,7 +65,7 @@ async function performSearch() {
                                 result.textContent = text.textContent;
                                 result.dataset.page = page;
                                 result.dataset.target = text.id || text.className;
-                                result.addEventListener('click', () => scrollToElement(text, page));
+                                result.addEventListener('click', (e) => scrollToElement(text, page, e));
                                 allResults.push(result);
                                 console.log(`Match found in ${page}:`, text.textContent);
                             }
@@ -92,7 +84,7 @@ async function performSearch() {
                 resultsDiv.classList.add('active');
                 console.log('Results displayed:', allResults.length);
             } else {
-                resultsDiv.innerHTML = `<div class="result">${document.documentElement.getAttribute('data-lang') === 'ru' ? 'Ничего не найдено' : 'No results found'}</div>`;
+                resultsDiv.innerHTML = `<div class="result">No results found</div>`; // Фиксируем английский текст
                 resultsDiv.style.display = 'block';
                 resultsDiv.classList.add('active');
                 console.log('No matches, showing no results message');
@@ -103,13 +95,6 @@ async function performSearch() {
     } else {
         console.error('No active search input found');
     }
-}
-
-function handleOrderSubmit(event) {
-    event.preventDefault();
-    const lang = document.documentElement.getAttribute('data-lang');
-    alert(lang === 'ru' ? 'Заявка успешно отправлена!' : 'Request successfully submitted!');
-    event.target.reset();
 }
 
 function toggleSidebar() {
@@ -165,19 +150,6 @@ function handleNavigation(event) {
     if (link) {
         const href = link.getAttribute('href');
         console.log('Navigating to:', href, 'Event target:', event.target, 'Current URL:', window.location.href, 'Base URL:', window.location.pathname);
-        if (href === '#order-form') {
-            event.preventDefault();
-            const orderForm = document.querySelector('#order-form');
-            if (orderForm) {
-                orderForm.scrollIntoView({ behavior: 'smooth' });
-                const sidebar = document.querySelector('.sidebar');
-                if (sidebar && sidebar.classList.contains('open')) {
-                    sidebar.classList.remove('open');
-                    const hamburger = document.querySelector('.hamburger');
-                    if (hamburger) hamburger.classList.remove('hidden');
-                }
-            }
-        }
     }
 }
 
@@ -199,7 +171,6 @@ function closeSearchOnOutsideClick(event) {
 async function scrollToElement(element, page) {
     if (page && page !== window.location.pathname) {
         window.location.href = page;
-        // Сокращаем задержку до 300 мс для более быстрого перехода
         await new Promise(resolve => setTimeout(resolve, 300));
     }
     if (element) {
@@ -218,9 +189,6 @@ async function scrollToElement(element, page) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const savedLang = localStorage.getItem('language') || 'ru';
-    document.documentElement.setAttribute('data-lang', savedLang);
-
     const searchInput = document.querySelector('.search-form input.desktop-only');
     const searchButton = document.querySelector('.search-form button');
     if (searchInput && searchButton) {
@@ -232,11 +200,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.error('Search input or button not found. Ensure .search-form contains at least one <input.desktop-only> and <button>.');
     }
-
-    const orderForms = document.querySelectorAll('#order-form');
-    orderForms.forEach(form => {
-        form.addEventListener('submit', handleOrderSubmit);
-    });
 
     const hamburger = document.querySelector('.hamburger');
     const closeBtn = document.querySelector('.close-btn');

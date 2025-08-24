@@ -1,116 +1,57 @@
 <!DOCTYPE html>
-<html lang="ru" data-lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>Вакансии</title>
+    <title>Vacancies</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <img src="logo.png" alt="Logo" class="logo">
         <div class="search-form">
-            <input type="text" id="search-input" class="desktop-only" placeholder="Поиск...">
+            <input type="text" id="search-input" class="desktop-only" placeholder="Search...">
             <button onclick="toggleSearch()">&#128269;</button>
         </div>
-        <div class="language-switcher" onclick="toggleLanguage()">RU/EN</div>
         <button class="hamburger">☰</button>
         <nav class="nav-links">
-            <a href="index.html">
-                <span class="ru">Главная</span>
-                <span class="en">Home</span>
-            </a>
-            <a href="products.html">
-                <span class="ru">Продукция</span>
-                <span class="en">Products</span>
-            </a>
-            <a href="about.html">
-                <span class="ru">О нас</span>
-                <span class="en">About</span>
-            </a>
-            <a href="contacts.html">
-                <span class="ru">Контакты</span>
-                <span class="en">Contacts</span>
-            </a>
-            <a href="#order-form">
-                <span class="ru">Заказ</span>
-                <span class="en">Order</span>
-            </a> 
-            <a href="suppliers.html">
-                <span class="ru">Поставщикам</span>
-                <span class="en">For Suppliers</span>
-            </a>
-            <a href="vacancies.html" class="active">
-                <span class="ru">Вакансии</span>
-                <span class="en">Vacancies</span>
-            </a>
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="about.html">About</a>
+            <a href="contacts.html">Contacts</a>
+            <a href="suppliers.html">For Suppliers</a>
+            <a href="vacancies.html" class="active">Vacancies</a>
         </nav>
         <div class="contact-info">
-            <span class="ru">+7 (4812) 33-98-97</span>
-            <span class="en">+7 (4812) 33-98-97</span>
+            +7 (4812) 33-98-97
             <br>
-            <span class="ru">info@smoldok.ru</span>
-            <span class="en">info@smoldok.ru</span>
+            info@smoldok.ru
         </div>
         <nav class="sidebar">
             <button class="close-btn">✕</button>
             <div class="nav-links">
-                <a href="index.html">
-                    <span class="ru">Главная</span>
-                    <span class="en">Home</span>
-                </a>
-                <a href="products.html">
-                    <span class="ru">Продукция</span>
-                    <span class="en">Products</span>
-                </a>
-                <a href="about.html">
-                    <span class="ru">О нас</span>
-                    <span class="en">About</span>
-                </a>
-                <a href="contacts.html">
-                    <span class="ru">Контакты</span>
-                    <span class="en">Contacts</span>
-                </a>
-                <a href="#order-form">
-                    <span class="ru">Заказ</span>
-                    <span class="en">Order</span>
-                </a> 
-                <a href="suppliers.html">
-                    <span class="ru">Поставщикам</span>
-                    <span class="en">For Suppliers</span>
-                </a>
-                <a href="vacancies.html" class="active">
-                    <span class="ru">Вакансии</span>
-                    <span class="en">Vacancies</span>
-                </a>
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="about.html">About</a>
+                <a href="contacts.html">Contacts</a>
+                <a href="suppliers.html">For Suppliers</a>
+                <a href="vacancies.html" class="active">Vacancies</a>
             </div>
         </nav>
     </header>
+    <div class="search-results" id="search-results" style="display: none;"></div>
     <div class="container">
-        <h2 class="ru">Вакансии</h2>
-        <h2 class="en">Vacancies</h2>
-        <p class="ru" id="p1">Открыты вакансии для специалистов в области производства.</p>
-        <p class="en" id="p2">Vacancies are open for specialists in production.</p>
+        <h2>Vacancies</h2>
+        <p>Vacancies are open for specialists in production.</p>
     </div>
     <footer>
-        <form id="order-form" class="order-form">
-            <h3 class="ru">Оформить заказ</h3>
-            <h3 class="en">Place an Order</h3>
-            <input type="text" name="name" placeholder="Ваше имя" autocomplete="name" required>
-            <input type="email" name="email" placeholder="Ваш email" autocomplete="email" required>
-            <input type="tel" name="phone" placeholder="Ваш телефон" autocomplete="tel" required>
-            <textarea name="message" placeholder="Ваше сообщение" autocomplete="off" required></textarea>
-            <button type="submit" class="ru">Отправить</button>
-            <button type="submit" class="en">Submit</button>
-        </form>
         <div class="contact-info mobile-only">
-            <span class="ru">+7 (4812) 33-98-97</span>
-            <span class="en">+7 (4812) 33-98-97</span>
+            +7 (4812) 33-98-97
             <br>
-            <span class="ru">info@smoldok.ru</span>
-            <span class="en">info@smoldok.ru</span>
+            info@smoldok.ru
         </div>
     </footer>
-    <div class="search-results" id="search-results" style="display: none;"></div>
     <script src="script.js"></script>
+</body>
+</html>

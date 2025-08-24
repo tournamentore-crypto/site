@@ -74,10 +74,11 @@ header img.logo {
 .search-form {
     display: flex;
     align-items: center;
-    margin-left: 20px;
+    margin: 0 10px;
     position: relative;
+    flex-direction: row-reverse;
 }
-.search-form input.desktop-only {
+.search-form input {
     padding: 6px;
     border: 1px solid #c8e6c9;
     border-radius: 5px;
@@ -88,10 +89,16 @@ header img.logo {
     transform: translateX(-100%);
     box-sizing: border-box;
 }
-.search-form input.desktop-only.active {
+.search-form input.active {
     width: 150px;
     opacity: 1;
     transform: translateX(0);
+}
+.search-form input.desktop-only {
+    display: block;
+}
+.search-form input.mobile-only {
+    display: none;
 }
 .search-form button {
     padding: 6px 10px;
@@ -106,8 +113,6 @@ header img.logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    z-index: 2;
 }
 .search-form button:hover {
     background-color: #388e3c;
@@ -116,7 +121,7 @@ header img.logo {
     cursor: pointer;
     font-weight: bold;
     color: black;
-    margin-left: 20px;
+    margin: 0 10px;
     padding: 6px 10px;
 }
 .contact-info {
@@ -125,7 +130,7 @@ header img.logo {
     margin: 0 10px;
     text-align: left;
     max-width: 150px;
-    word-break: break-all;
+    white-space: normal;
     flex-shrink: 0;
 }
 .contact-info.mobile-only {
@@ -137,32 +142,29 @@ header img.logo {
     border-radius: 5px;
     background-color: #f1f8f1;
     position: fixed;
-    bottom: 0;
+    bottom: 0; /* Фиксируем внизу экрана */
     left: 0;
-    width: 300px;
-    z-index: 900;
+    width: 100%;
+    z-index: 900; /* Ниже шапки (1000), но выше контента */
     box-sizing: border-box;
-    display: none;
-    max-height: 300px;
-    overflow-y: auto;
+    transform: translateY(100%); /* Скрываем по умолчанию */
+    transition: transform 0.3s ease; /* Анимация появления */
 }
 .search-results.active {
-    display: block;
+    transform: translateY(0); /* Появление снизу */
 }
 .search-results .result {
     padding: 5px;
     margin: 5px 0;
-    font-size: 14px;
-    cursor: pointer;
 }
-.search-results .result:hover {
-    background-color: #e0e0e0;
+.search-results .highlight {
+    background-color: #c8e6c9;
 }
 .container {
     max-width: 1200px;
     margin: 20px auto;
     padding: 0 20px;
-    padding-top: 80px;
+    padding-top: 80px; /* Учитываем высоту шапки */
 }
 h2 {
     color: #2e7d32;
@@ -239,8 +241,6 @@ footer {
     text-align: center;
     border-top: 2px solid #c8e6c9;
     margin-top: 20px;
-    position: relative;
-    z-index: 800;
 }
 [data-lang="ru"] .en {
     display: none;
